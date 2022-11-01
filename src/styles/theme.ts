@@ -12,6 +12,7 @@ export const theme = {
     categories: '#5636d3',
     attention: '#e83f5b',
     success: '#12a454',
+    shadow: '#0000000d',
   },
 
   fonts: {
