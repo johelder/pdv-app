@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
-import Feather from 'react-native-vector-icons/Feather';
+import { FlatList, FlatListProps } from 'react-native';
+import { ISale } from './types';
 
 export const Container = styled.View`
   flex: 1;
@@ -81,82 +82,13 @@ export const DailySalesLabel = styled.Text`
   margin-bottom: 22px;
 `;
 
-export const SaleModalContainer = styled.View`
-  width: 100%;
-  height: 60%;
-
-  background-color: ${({ theme }) => theme.colors.light};
-
-  border-radius: 5px;
+export const SalesContainer = styled.View`
+  padding: 0 15px;
+  flex: 1;
 `;
 
-export const SaleModalContent = styled.ScrollView.attrs({
+export const Sales = styled(
+  FlatList as new (props: FlatListProps<ISale>) => FlatList<ISale>,
+).attrs({
   showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    padding: 15,
-  },
 })``;
-
-export const ModalHeader = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 20px;
-`;
-
-export const ModalTitle = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
-  font-size: 20px;
-
-  color: ${({ theme }) => theme.colors.dark};
-`;
-
-export const Icon = styled(Feather)`
-  font-size: 24px;
-  color: ${({ theme }) => theme.colors.dark};
-`;
-
-export const ModalTopic = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.primary.medium};
-  font-size: 18px;
-
-  color: ${({ theme }) => theme.colors.secondary};
-
-  margin: 5px 0 10px;
-`;
-
-export const ProductWrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const ModalSubTopic = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.primary.medium};
-  font-size: 16px;
-
-  color: ${({ theme }) => theme.colors.dark};
-  margin-bottom: 10px;
-`;
-
-export const ModalFooter = styled.View`
-  margin-top: 30px;
-  flex-direction: row;
-  align-self: flex-end;
-  align-items: center;
-`;
-
-export const SaleTotalLabel = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
-  font-size: 18px;
-
-  color: ${({ theme }) => theme.colors.dark};
-`;
-
-export const SaleTotal = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.primary.bold};
-  font-size: 18px;
-
-  color: ${({ theme }) => theme.colors.secondary};
-`;
