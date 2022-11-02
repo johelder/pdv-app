@@ -1,5 +1,5 @@
 import React from 'react';
-import { IModalProps } from '../../types';
+import { IModalProps } from './types';
 
 import * as S from './styles';
 
