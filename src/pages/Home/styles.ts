@@ -23,7 +23,7 @@ export const LogoContainer = styled.View`
   flex-direction: row;
   align-items: center;
 
-  margin-top: 10px;
+  margin-top: 40px;
 `;
 
 export const LogoLabel = styled.Text`
@@ -35,7 +35,7 @@ export const LogoLabel = styled.Text`
 `;
 
 export const DailyBillingContainer = styled.View`
-  margin-top: 45px;
+  margin-top: 35px;
 
   align-items: center;
 `;
