@@ -1,3 +1,10 @@
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../routes/types';
+
+type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export interface HomeProps extends NavigationProps {}
+
 export interface IProduct {
   id: number;
   name: string;
