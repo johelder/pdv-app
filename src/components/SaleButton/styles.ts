@@ -59,11 +59,13 @@ export const SaleTotal = styled.Text`
 
 export const SaleModalContainer = styled.View`
   width: 100%;
-  height: 60%;
+  height: 65%;
 
   background-color: ${({ theme }) => theme.colors.light};
 
   border-radius: 5px;
+
+  justify-content: center;
 `;
 
 export const SaleModalContent = styled.ScrollView.attrs({
