@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IButtonNavigationProps } from '../../types';
+import { IButtonNavigationProps } from './types';
 import { buttonSwitcher } from './buttonSwitcher';
 
 import * as S from './styles';
