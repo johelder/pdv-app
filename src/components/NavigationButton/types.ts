@@ -1,4 +1,6 @@
-export interface IButtonNavigationProps {
+import { TouchableOpacityProps } from 'react-native';
+
+export interface IButtonNavigationProps extends TouchableOpacityProps {
   type: 'new-sale' | 'register-product' | 'register-category' | 'registered';
 }
 
