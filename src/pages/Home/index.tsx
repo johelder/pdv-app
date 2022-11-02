@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
-
 import { StatusBar, ListRenderItemInfo } from 'react-native';
+
 import { NavigationButton, SaleButton } from '../../components';
+import { formatMoney, formatToLongDate } from '../../utils';
 import { ISale } from './types';
 
 import Logo from '../../assets/images/logo.svg';
@@ -10,6 +11,11 @@ import { sales } from './data';
 import * as S from './styles';
 
 export const Home = () => {
+  const dailyBillingTotal = formatMoney(
+    sales.reduce((salesTotal, sale) => (salesTotal += sale.total / 100), 0),
+  );
+  const dailyDate = formatToLongDate(new Date());
+
   const renderSale = useCallback(
     ({ item: sale }: ListRenderItemInfo<ISale>) => {
       return <SaleButton sale={sale} />;
@@ -34,8 +40,8 @@ export const Home = () => {
 
           <S.DailyBillingContainer>
             <S.DailyBillingLabel>Faturamento diário</S.DailyBillingLabel>
-            <S.DailyTotal>R$ 345,00</S.DailyTotal>
-            <S.Date>22, agosto 2022</S.Date>
+            <S.DailyTotal>{dailyBillingTotal}</S.DailyTotal>
+            <S.Date>{dailyDate}</S.Date>
           </S.DailyBillingContainer>
 
           <S.NavigationButtonsContainer horizontal>
