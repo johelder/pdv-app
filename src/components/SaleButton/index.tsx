@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 
-import { ISaleButtonProps } from './types';
 import { Modal as SalesModal } from '../Modal';
+import { formatHours, formatMoney } from '../../utils';
+
+import { ISaleButtonProps } from './types';
+import { IProductSold } from '../../pages/Home/types';
 
 import * as S from './styles';
-import { formatHours, formatMoney } from '../../utils';
-import { IProductSold } from '../../pages/Home/types';
 
 export const SaleButton = ({ sale, ...rest }: ISaleButtonProps) => {
   const [toggleSaleModal, setToggleModalSale] = useState(false);
