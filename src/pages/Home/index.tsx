@@ -3,14 +3,14 @@ import { StatusBar, ListRenderItemInfo } from 'react-native';
 
 import { NavigationButton, SaleButton } from '../../components';
 import { formatMoney, formatToLongDate } from '../../utils';
-import { HomeProps, ISale } from './types';
+import { IHomeProps, ISale } from './types';
 
 import Logo from '../../assets/images/logo.svg';
 import { sales } from './data';
 
 import * as S from './styles';
 
-export const Home = ({ navigation }: HomeProps) => {
+export const Home = ({ navigation }: IHomeProps) => {
   const dailyBillingTotal = formatMoney(
     sales.reduce((salesTotal, sale) => (salesTotal += sale.total / 100), 0),
   );

@@ -1,11 +1,11 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { RootStackParamList } from './types';
+import { TRootStackParamList } from './types';
 
 import { Home, NewSale } from '../pages';
 import { useTheme } from 'styled-components';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<TRootStackParamList>();
 
 export const AppStackRoutes = () => {
   const theme = useTheme();
@@ -22,6 +22,7 @@ export const AppStackRoutes = () => {
         component={NewSale}
         options={{
           title: 'Nova venda',
+          headerBackTitle: '',
           headerTitleStyle: {
             fontFamily: theme.fonts.primary.bold,
           },

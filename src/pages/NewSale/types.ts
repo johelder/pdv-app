@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../routes/types';
+import { TRootStackParamList } from '../../routes/types';
 
-type NavigationProps = NativeStackScreenProps<RootStackParamList, 'NewSale'>;
+type TNavigationProps = NativeStackScreenProps<TRootStackParamList, 'NewSale'>;
 
-export interface NewSaleProps extends NavigationProps {}
+export interface INewSaleProps extends TNavigationProps {}
