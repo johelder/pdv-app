@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 import { Button, Checkbox, TextInput } from '../../components';
+
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
+import emptyBagAnimationSource from '../../assets/animations/empty-bag-animation.json';
 
 import { useTheme } from 'styled-components';
 
@@ -65,6 +67,27 @@ export const NewSale = () => {
                 />
               </TextInput.Root>
             </S.ChangeContainer>
+
+            <S.EmptyBagContainer>
+              <S.EmptyBagAnimation
+                source={emptyBagAnimationSource}
+                style={{ width: 300 }}
+                autoPlay
+                loop
+              />
+
+              <S.EmptyBagLabel>
+                Você ainda não adicionou nenhum{'\n'}produto a essa venda
+              </S.EmptyBagLabel>
+            </S.EmptyBagContainer>
+
+            <S.ButtonFilterContainer>
+              <Button.Root type="filled" color={theme.colors.primary}>
+                <Button.Text color={theme.colors.light}>
+                  Finalizar venda
+                </Button.Text>
+              </Button.Root>
+            </S.ButtonFilterContainer>
           </S.Content>
         </TouchableWithoutFeedback>
       </S.Container>
