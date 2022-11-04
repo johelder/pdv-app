@@ -17,11 +17,22 @@ export const AddProductIcon = styled(Feather)`
 
 export const ChangeContainer = styled.View``;
 
-export const NeedChangeContainer = styled.View``;
+export const NeedChangeContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+`;
 
 export const ChangeLabel = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary.semiBold};
   font-size: 18px;
 
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+export const ChangeIcon = styled(Feather)`
+  font-size: 24px;
   color: ${({ theme }) => theme.colors.dark};
 `;
