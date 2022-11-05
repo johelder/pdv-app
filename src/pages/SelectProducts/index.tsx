@@ -1,10 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import { DraggableButton } from '../../components';
+
+import { useTheme } from 'styled-components';
+
+import * as S from './styles';
 
 export const SelectProducts = () => {
+  const theme = useTheme();
+
   return (
-    <View>
-      <Text>Select Product Page</Text>
-    </View>
+    <S.Container>
+      <DraggableButton color={theme.colors.products}>
+        <S.BagIcon name="shopping-bag" />
+      </DraggableButton>
+    </S.Container>
   );
 };
