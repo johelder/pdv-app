@@ -73,6 +73,7 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                   placeholder={!isCheckboxSelected ? 'Valor do troco' : '0,00'}
                   keyboardType="numeric"
                   editable={!isCheckboxSelected}
+                  placeholderTextColor={theme.colors.gray_400}
                 />
               </TextInput.Root>
             </S.ChangeContainer>
