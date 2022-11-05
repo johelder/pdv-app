@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TRootStackParamList } from './types';
 
-import { Home, NewSale } from '../pages';
+import { Home, NewSale, SelectProducts } from '../pages';
 import { useTheme } from 'styled-components';
 
 const Stack = createNativeStackNavigator<TRootStackParamList>();
@@ -17,11 +17,8 @@ export const AppStackRoutes = () => {
         component={Home}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name="NewSale"
-        component={NewSale}
-        options={{
-          title: 'Nova venda',
+      <Stack.Group
+        screenOptions={{
           headerBackTitle: '',
           headerTitleStyle: {
             fontFamily: theme.fonts.primary.bold,
@@ -31,7 +28,22 @@ export const AppStackRoutes = () => {
           },
           headerTintColor: theme.colors.primary,
         }}
-      />
+      >
+        <Stack.Screen
+          name="NewSale"
+          component={NewSale}
+          options={{
+            title: 'Nova venda',
+          }}
+        />
+        <Stack.Screen
+          name="SelectProducts"
+          component={SelectProducts}
+          options={{
+            title: 'Selecionar produtos',
+          }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
