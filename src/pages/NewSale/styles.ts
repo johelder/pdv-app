@@ -8,7 +8,9 @@ export const Container = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Content = styled.View`
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})`
   padding: 15px;
   flex: 1;
 `;
@@ -57,10 +59,5 @@ export const EmptyBagLabel = styled.Text`
 `;
 
 export const ButtonFilterContainer = styled.View`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  padding: 0 15px;
+  margin-bottom: 15px;
 `;
