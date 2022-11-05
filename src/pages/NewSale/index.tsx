@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 import { Button, Checkbox, TextInput } from '../../components';
+import { TNewSaleProps } from './types';
 
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
 import emptyBagAnimationSource from '../../assets/animations/empty-bag-animation.json';
@@ -10,12 +11,16 @@ import { useTheme } from 'styled-components';
 
 import * as S from './styles';
 
-export const NewSale = () => {
+export const NewSale = ({ navigation }: TNewSaleProps) => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const theme = useTheme();
 
   const handleSelectCheckbox = () => {
     setIsCheckboxSelected(prevCheckboxState => !prevCheckboxState);
+  };
+
+  const handleRedirectToSelectProducts = () => {
+    navigation.navigate('SelectProducts');
   };
 
   return (
@@ -29,7 +34,11 @@ export const NewSale = () => {
       <S.Container>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <S.Content>
-            <Button.Root type="filled" color={theme.colors.primary}>
+            <Button.Root
+              type="filled"
+              color={theme.colors.primary}
+              onPress={handleRedirectToSelectProducts}
+            >
               <Button.Icon>
                 <S.AddProductIcon name="shopping-bag" />
               </Button.Icon>
