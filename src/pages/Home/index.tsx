@@ -3,18 +3,22 @@ import { StatusBar, ListRenderItemInfo } from 'react-native';
 
 import { NavigationButton, SaleButton } from '../../components';
 import { formatMoney, formatToLongDate } from '../../utils';
-import { IHomeProps, ISale } from './types';
+import { THomeProps, ISale } from './types';
 
 import Logo from '../../assets/images/logo.svg';
 import { sales } from './data';
 
 import * as S from './styles';
 
-export const Home = ({ navigation }: IHomeProps) => {
+export const Home = ({ navigation }: THomeProps) => {
   const dailyBillingTotal = formatMoney(
     sales.reduce((salesTotal, sale) => (salesTotal += sale.total / 100), 0),
   );
   const dailyDate = formatToLongDate(new Date());
+
+  const handleRedirectToNewSale = () => {
+    navigation.navigate('NewSale');
+  };
 
   const renderSale = useCallback(
     ({ item: sale }: ListRenderItemInfo<ISale>) => {
@@ -22,10 +26,6 @@ export const Home = ({ navigation }: IHomeProps) => {
     },
     [],
   );
-
-  const handleRedirectToNewSale = () => {
-    navigation.navigate('NewSale');
-  };
 
   return (
     <>
