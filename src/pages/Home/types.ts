@@ -1,3 +1,7 @@
+import { TNavigationProps } from '../../routes/types';
+
+export type THomeProps = TNavigationProps<'Home'>;
+
 export interface IProduct {
   id: number;
   name: string;
