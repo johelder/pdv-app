@@ -16,12 +16,14 @@ export const ButtonRootContainer = styled.TouchableOpacity<IButtonRootProps>`
     type === 'filled' &&
     css`
       background: ${color};
+      border: 1px solid ${color};
     `}
 
   ${({ type, color }) =>
     type === 'outline' &&
     css`
       border: 1px solid ${color};
+      background-color: ${({ theme }) => theme.colors.light};
     `}
 `;
 
