@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
+import { TouchableOpacityProps } from 'react-native';
 
-export interface IDraggableButtonProps {
+export interface IDraggableButtonProps extends TouchableOpacityProps {
   children: ReactNode;
   color: string;
 }

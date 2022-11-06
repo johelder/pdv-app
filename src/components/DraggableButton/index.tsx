@@ -17,7 +17,11 @@ import { IDraggableButtonProps, TGestureHandlerContext } from './types';
 
 import * as S from './styles';
 
-export const DraggableButton = ({ color, children }: IDraggableButtonProps) => {
+export const DraggableButton = ({
+  color,
+  children,
+  ...rest
+}: IDraggableButtonProps) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -88,7 +92,7 @@ export const DraggableButton = ({ color, children }: IDraggableButtonProps) => {
   });
 
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
         <Animated.View style={[animatedStyles, draggableButtonStyles.content]}>
           {children}
