@@ -1,4 +1,4 @@
-import { IProduct } from '../Home/types';
+import { IProduct } from '../../components/Product/types';
 
 export interface ICategory {
   id: number;

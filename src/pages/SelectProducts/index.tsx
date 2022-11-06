@@ -1,20 +1,34 @@
 import React, { useCallback, useState } from 'react';
+import { ListRenderItemInfo } from 'react-native';
 
-import { Button, DraggableButton, TextInput } from '../../components';
+import {
+  Button,
+  DraggableButton,
+  Modal,
+  Product,
+  TextInput,
+} from '../../components';
+import { IProduct } from '../../components/Product/types';
+import { ICategory } from './types';
 import { categories } from './data';
 
 import { useTheme } from 'styled-components';
 
 import * as S from './styles';
-import { ListRenderItemInfo } from 'react-native';
-import { ICategory } from './types';
 
 export const SelectProducts = () => {
-  const [activeCategory, setActiveCategory] = useState(1);
+  const [activeCategory, setActiveCategory] = useState({} as ICategory);
+  const [toggleAddedProductsModal, setToggleAddedProductsModal] =
+    useState(false);
+
   const theme = useTheme();
 
-  const handleActiveCategory = useCallback((categoryId: number) => {
-    setActiveCategory(categoryId);
+  const handleToggleAddedProductsModal = useCallback(() => {
+    setToggleAddedProductsModal(prevModalState => !prevModalState);
+  }, []);
+
+  const handleActiveCategory = useCallback((category: ICategory) => {
+    setActiveCategory(category);
   }, []);
 
   const renderCategory = useCallback(
@@ -22,13 +36,13 @@ export const SelectProducts = () => {
       return (
         <S.CategoryContainer>
           <Button.Root
-            type={activeCategory === category.id ? 'filled' : 'outline'}
+            type={activeCategory.id === category.id ? 'filled' : 'outline'}
             color={theme.colors.categories}
-            onPress={() => handleActiveCategory(category.id)}
+            onPress={() => handleActiveCategory(category)}
           >
             <Button.Text
               color={
-                activeCategory === category.id
+                activeCategory.id === category.id
                   ? theme.colors.light
                   : theme.colors.dark
               }
@@ -48,9 +62,23 @@ export const SelectProducts = () => {
     ],
   );
 
+  const renderProduct = useCallback(
+    ({ item: product }: ListRenderItemInfo<IProduct>) => {
+      return (
+        <S.ProductContainer>
+          <Product product={product} />
+        </S.ProductContainer>
+      );
+    },
+    [],
+  );
+
   return (
     <S.Container>
-      <DraggableButton color={theme.colors.products}>
+      <DraggableButton
+        color={theme.colors.products}
+        onPress={handleToggleAddedProductsModal}
+      >
         <S.BagIcon name="shopping-bag" />
       </DraggableButton>
 
@@ -77,6 +105,43 @@ export const SelectProducts = () => {
           keyExtractor={category => String(category.id)}
         />
       </S.CategoriesContainer>
+
+      <S.ProductsContainer>
+        <S.Products
+          data={activeCategory.products}
+          renderItem={renderProduct}
+          keyExtractor={product => String(product.id)}
+          numColumns={2}
+          key={2}
+        />
+      </S.ProductsContainer>
+
+      <Modal
+        isVisible={toggleAddedProductsModal}
+        onCloseModal={handleToggleAddedProductsModal}
+      >
+        <S.ModalContainer>
+          <S.ModalContent>
+            <S.ModalHeader>
+              <S.Title>Produtos Selecionados</S.Title>
+
+              <S.CloseModalButton onPress={handleToggleAddedProductsModal}>
+                <S.CloseIcon name="x" />
+              </S.CloseModalButton>
+            </S.ModalHeader>
+
+            <S.AddedProductContainer>
+              <S.AddedProduct>1x Pizza Putaria</S.AddedProduct>
+              <S.AddedProductPrice>R$ 14,99</S.AddedProductPrice>
+            </S.AddedProductContainer>
+
+            <S.AddedProductContainer>
+              <S.AddedProduct>1x Pizza Putaria</S.AddedProduct>
+              <S.AddedProductPrice>R$ 14,99</S.AddedProductPrice>
+            </S.AddedProductContainer>
+          </S.ModalContent>
+        </S.ModalContainer>
+      </Modal>
     </S.Container>
   );
 };
