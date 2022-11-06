@@ -1,16 +1,7 @@
+import { IProduct } from '../../components/Product/types';
 import { TNavigationProps } from '../../routes/types';
 
 export type THomeProps = TNavigationProps<'Home'>;
-
-export interface IProduct {
-  id: number;
-  name: string;
-  code: string;
-  description: string;
-  status: string;
-  image: string;
-  price: number;
-}
 
 export interface IProductSold
   extends Pick<IProduct, 'name' | 'code' | 'image'> {
