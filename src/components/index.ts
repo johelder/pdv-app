@@ -5,6 +5,7 @@ import { Button } from './Button';
 import { Checkbox } from './Checkbox';
 import { TextInput } from './TextInput';
 import { DraggableButton } from './DraggableButton';
+import { Product } from './Product';
 
 export {
   NavigationButton,
@@ -14,4 +15,5 @@ export {
   Checkbox,
   TextInput,
   DraggableButton,
+  Product,
 };
