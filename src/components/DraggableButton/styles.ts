@@ -10,6 +10,9 @@ export const Container = styled.View`
   position: absolute;
   right: 0;
   top: 10%;
+
+  z-index: 2;
+  elevation: 2;
 `;
 
 export const CountContainer = styled.View`
