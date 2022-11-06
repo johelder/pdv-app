@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 import { Button, Checkbox, TextInput } from '../../components';
@@ -19,9 +19,9 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
     setIsCheckboxSelected(prevCheckboxState => !prevCheckboxState);
   };
 
-  const handleRedirectToSelectProducts = () => {
+  const handleRedirectToSelectProducts = useCallback(() => {
     navigation.navigate('SelectProducts');
-  };
+  }, [navigation]);
 
   return (
     <>
