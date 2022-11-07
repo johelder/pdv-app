@@ -94,21 +94,17 @@ export const DraggableButton = ({
     },
   });
 
-  return (
-    !!products.length && (
-      <S.Container {...rest}>
-        <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
-          <Animated.View
-            style={[animatedStyles, draggableButtonStyles.content]}
-          >
-            {children}
+  return products.length ? (
+    <S.Container {...rest}>
+      <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
+        <Animated.View style={[animatedStyles, draggableButtonStyles.content]}>
+          {children}
 
-            <S.CountContainer>
-              <S.CountLabel>{products.length}</S.CountLabel>
-            </S.CountContainer>
-          </Animated.View>
-        </PanGestureHandler>
-      </S.Container>
-    )
-  );
+          <S.CountContainer>
+            <S.CountLabel>{products.length}</S.CountLabel>
+          </S.CountContainer>
+        </Animated.View>
+      </PanGestureHandler>
+    </S.Container>
+  ) : null;
 };
