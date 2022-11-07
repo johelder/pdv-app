@@ -3,6 +3,7 @@ import { FlatList, FlatListProps } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import { ICategory } from './types';
 import { IProduct } from '../../components/Product/types';
+import { IProductBag } from '../../features/bag/types';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -74,17 +75,19 @@ export const ModalContainer = styled.View`
   max-height: 450px;
 `;
 
-export const ModalContent = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    padding: 15,
-  },
-})``;
+export const ModalContent = styled.View`
+  padding: 15px;
+`;
 
 export const ModalHeader = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 `;
+
+export const AddedProducts = styled(
+  FlatList as new (props: FlatListProps<IProductBag>) => FlatList<IProductBag>,
+)``;
 
 export const CloseModalButton = styled.TouchableOpacity``;
 

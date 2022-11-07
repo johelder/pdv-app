@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
+import { useAppSelector } from '../../hooks/appSelector';
+
 import {
   Button,
   DraggableButton,
@@ -15,11 +17,14 @@ import { categories } from './data';
 import { useTheme } from 'styled-components';
 
 import * as S from './styles';
+import { IProductBag } from '../../features/bag/types';
+import { formatMoney } from '../../utils';
 
 export const SelectProducts = () => {
   const [activeCategory, setActiveCategory] = useState({} as ICategory);
   const [toggleAddedProductsModal, setToggleAddedProductsModal] =
     useState(false);
+  const products = useAppSelector(state => state.bag.products);
 
   const theme = useTheme();
 
@@ -68,6 +73,24 @@ export const SelectProducts = () => {
         <S.ProductContainer>
           <Product product={product} />
         </S.ProductContainer>
+      );
+    },
+    [],
+  );
+
+  const renderAddedProducts = useCallback(
+    ({ item: addedProduct }: ListRenderItemInfo<IProductBag>) => {
+      const formattedPrice = formatMoney(
+        (addedProduct.price * addedProduct.quantity) / 100,
+      );
+
+      return (
+        <S.AddedProductContainer>
+          <S.AddedProduct>
+            {addedProduct.quantity}x {addedProduct.name}
+          </S.AddedProduct>
+          <S.AddedProductPrice>{formattedPrice}</S.AddedProductPrice>
+        </S.AddedProductContainer>
       );
     },
     [],
@@ -130,15 +153,11 @@ export const SelectProducts = () => {
               </S.CloseModalButton>
             </S.ModalHeader>
 
-            <S.AddedProductContainer>
-              <S.AddedProduct>1x Pizza Putaria</S.AddedProduct>
-              <S.AddedProductPrice>R$ 14,99</S.AddedProductPrice>
-            </S.AddedProductContainer>
-
-            <S.AddedProductContainer>
-              <S.AddedProduct>1x Pizza Putaria</S.AddedProduct>
-              <S.AddedProductPrice>R$ 14,99</S.AddedProductPrice>
-            </S.AddedProductContainer>
+            <S.AddedProducts
+              data={products}
+              renderItem={renderAddedProducts}
+              keyExtractor={addedProduct => String(addedProduct.id)}
+            />
           </S.ModalContent>
         </S.ModalContainer>
       </Modal>
