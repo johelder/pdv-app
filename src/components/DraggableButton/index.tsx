@@ -13,6 +13,8 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
+import { useAppSelector } from '../../hooks/appSelector';
+
 import { IDraggableButtonProps, TGestureHandlerContext } from './types';
 
 import * as S from './styles';
@@ -22,6 +24,7 @@ export const DraggableButton = ({
   children,
   ...rest
 }: IDraggableButtonProps) => {
+  const products = useAppSelector(state => state.bag.products);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -92,16 +95,20 @@ export const DraggableButton = ({
   });
 
   return (
-    <S.Container {...rest}>
-      <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
-        <Animated.View style={[animatedStyles, draggableButtonStyles.content]}>
-          {children}
+    !!products.length && (
+      <S.Container {...rest}>
+        <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
+          <Animated.View
+            style={[animatedStyles, draggableButtonStyles.content]}
+          >
+            {children}
 
-          <S.CountContainer>
-            <S.CountLabel>2</S.CountLabel>
-          </S.CountContainer>
-        </Animated.View>
-      </PanGestureHandler>
-    </S.Container>
+            <S.CountContainer>
+              <S.CountLabel>{products.length}</S.CountLabel>
+            </S.CountContainer>
+          </Animated.View>
+        </PanGestureHandler>
+      </S.Container>
+    )
   );
 };
