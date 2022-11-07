@@ -68,7 +68,9 @@ export const MultiButtonContainer = styled.View`
   padding: 0 15px;
 `;
 
-export const ToggleProductButton = styled.TouchableOpacity``;
+export const RemoveProductButton = styled.TouchableOpacity``;
+
+export const AddProductButton = styled.TouchableOpacity``;
 
 export const RemoveIcon = styled(Feather)`
   font-size: 34px;

@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
-import { IProductProps } from './types';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/appSelector';
+import { addProduct, removeProduct } from '../../features/bag/bag-slice';
+
+import { IProduct, IProductProps } from './types';
 import { formatMoney } from '../../utils';
 
 import * as S from './styles';
 
 export const Product = ({ product }: IProductProps) => {
+  const dispatch = useDispatch();
+  const products = useAppSelector(state => state.bag.products);
+
+  const currentProduct = useMemo(
+    () => products.find(storedProduct => storedProduct.id === product.id),
+    [product.id, products],
+  );
+
   const formattedProductPrice = formatMoney(product.price / 100);
+
+  const handleAddProduct = (product: IProduct) => {
+    dispatch(addProduct(product));
+  };
+
+  const handleRemoveProduct = (productId: number) => {
+    if (!currentProduct?.quantity) {
+      return;
+    }
+
+    dispatch(removeProduct(productId));
+  };
 
   return (
     <S.Container>
@@ -20,15 +44,19 @@ export const Product = ({ product }: IProductProps) => {
         <S.Description>{product.description}</S.Description>
 
         <S.MultiButtonContainer>
-          <S.ToggleProductButton>
+          <S.RemoveProductButton
+            onPress={() => handleRemoveProduct(product.id)}
+          >
             <S.RemoveIcon name="minus-circle" />
-          </S.ToggleProductButton>
+          </S.RemoveProductButton>
 
-          <S.ProductQuantityLabel>14</S.ProductQuantityLabel>
+          <S.ProductQuantityLabel>
+            {currentProduct?.quantity ?? 0}
+          </S.ProductQuantityLabel>
 
-          <S.ToggleProductButton>
+          <S.AddProductButton onPress={() => handleAddProduct(product)}>
             <S.AddIcon name="plus-circle" />
-          </S.ToggleProductButton>
+          </S.AddProductButton>
         </S.MultiButtonContainer>
       </S.DescriptionContainer>
     </S.Container>
