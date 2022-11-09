@@ -20,7 +20,6 @@ import { IDraggableButtonProps, TGestureHandlerContext } from './types';
 import * as S from './styles';
 
 export const DraggableButton = ({
-  color,
   children,
   ...rest
 }: IDraggableButtonProps) => {
@@ -85,26 +84,28 @@ export const DraggableButton = ({
 
   const draggableButtonStyles = StyleSheet.create({
     content: {
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-      backgroundColor: color,
-      alignItems: 'center',
-      justifyContent: 'center',
+      flex: 1,
+      position: 'absolute',
+      top: 100,
+      right: 0,
+      marginHorizontal: 5,
+
+      zIndex: 2,
+      elevation: 2,
     },
   });
 
   return products.length ? (
-    <S.Container {...rest}>
-      <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
-        <Animated.View style={[animatedStyles, draggableButtonStyles.content]}>
+    <PanGestureHandler onGestureEvent={handlePanGestureEvent}>
+      <Animated.View style={[animatedStyles, draggableButtonStyles.content]}>
+        <S.Container {...rest}>
           {children}
 
           <S.CountContainer>
             <S.CountLabel>{products.length}</S.CountLabel>
           </S.CountContainer>
-        </Animated.View>
-      </PanGestureHandler>
-    </S.Container>
+        </S.Container>
+      </Animated.View>
+    </PanGestureHandler>
   ) : null;
 };

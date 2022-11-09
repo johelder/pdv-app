@@ -98,10 +98,7 @@ export const SelectProducts = () => {
 
   return (
     <S.Container>
-      <DraggableButton
-        color={theme.colors.products}
-        onPress={handleToggleAddedProductsModal}
-      >
+      <DraggableButton onPress={handleToggleAddedProductsModal}>
         <S.BagIcon name="shopping-bag" />
       </DraggableButton>
 

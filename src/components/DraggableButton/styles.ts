@@ -3,18 +3,15 @@ import styled from 'styled-components/native';
 export const Container = styled.TouchableOpacity.attrs({
   activeOpacity: 0.9,
 })`
-  flex: 1;
+  width: 60px;
+  height: 60px;
+
   align-items: center;
   justify-content: center;
 
-  margin: 0 5px;
+  border-radius: 30px;
 
-  position: absolute;
-  right: 0;
-  top: 10%;
-
-  z-index: 2;
-  elevation: 2;
+  background-color: ${({ theme }) => theme.colors.products};
 `;
 
 export const CountContainer = styled.View`
