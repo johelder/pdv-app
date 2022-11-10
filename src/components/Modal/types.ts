@@ -5,4 +5,5 @@ export interface IModalProps {
   onCloseModal: () => void;
   swipeDirection?: 'up' | 'down';
   children: ReactNode;
+  modalPosition?: 'bottom' | 'center';
 }
