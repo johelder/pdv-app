@@ -63,7 +63,9 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
 
   const renderAddedProduct = useCallback(
     ({ item: addedProduct }: ListRenderItemInfo<IProductBag>) => {
-      const formattedPrice = formatMoney(addedProduct.price / 100);
+      const formattedPrice = formatMoney(
+        (addedProduct.price * addedProduct.quantity) / 100,
+      );
 
       return (
         <S.AddedProductContainer>
