@@ -1,16 +1,16 @@
 import styled from 'styled-components/native';
+import { FlatList, FlatListProps } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 import LottieView from 'lottie-react-native';
+import { IProductBag } from '../../features/bag/types';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Content = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-})`
+export const Content = styled.View`
   padding: 15px;
   flex: 1;
 `;
@@ -112,4 +112,70 @@ export const ChoicePaymentMethodLabel = styled.Text`
 
   align-self: center;
   margin: 15px;
+`;
+
+export const AddedProducts = styled(
+  FlatList as new (props: FlatListProps<IProductBag>) => FlatList<IProductBag>,
+)``;
+
+export const AddedProductContainer = styled.View`
+  margin-bottom: 15px;
+`;
+
+export const AddedProductLabelsContainer = styled.View`
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const AddedProductLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.medium};
+  font-size: 16px;
+
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+export const RemoveProductButton = styled.TouchableOpacity`
+  margin-top: 10px;
+`;
+
+export const RemoveProductLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.bold};
+  font-size: 14px;
+
+  color: ${({ theme }) => theme.colors.attention};
+`;
+
+export const AddedProductsListHeaderContainer = styled.View`
+  margin: 20px 0;
+`;
+
+export const AddedProductListTitle = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.bold};
+  font-size: 18px;
+
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+export const AddedProductsListFooterContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-top: 20px;
+`;
+
+export const ProductsTotalLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
+  font-size: 20px;
+
+  color: ${({ theme }) => theme.colors.dark};
+`;
+
+export const ProductsTotal = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.bold};
+  font-size: 20px;
+
+  color: ${({ theme }) => theme.colors.success};
 `;
