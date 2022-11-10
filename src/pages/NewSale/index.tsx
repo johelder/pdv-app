@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
-import { Button, Checkbox, TextInput } from '../../components';
+import { Button, Checkbox, Modal, TextInput } from '../../components';
 import { TNewSaleProps } from './types';
 
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
+import PixIcon from '../../assets/images/pix.svg';
 import emptyBagAnimationSource from '../../assets/animations/empty-bag-animation.json';
 
 import { useTheme } from 'styled-components';
@@ -13,11 +14,18 @@ import * as S from './styles';
 
 export const NewSale = ({ navigation }: TNewSaleProps) => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const [togglePaymentMethodsModal, setTogglePaymentMethodsModal] =
+    useState(false);
+
   const theme = useTheme();
 
   const handleSelectCheckbox = () => {
     setIsCheckboxSelected(prevCheckboxState => !prevCheckboxState);
   };
+
+  const handleTogglePaymentMethodsModal = useCallback(() => {
+    setTogglePaymentMethodsModal(prevModalState => !prevModalState);
+  }, []);
 
   const handleRedirectToSelectProducts = useCallback(() => {
     navigation.navigate('SelectProducts');
@@ -48,7 +56,11 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
               </Button.Text>
             </Button.Root>
 
-            <Button.Root type="filled" color={theme.colors.primary}>
+            <Button.Root
+              type="filled"
+              color={theme.colors.primary}
+              onPress={handleTogglePaymentMethodsModal}
+            >
               <Button.Icon>
                 <PaymentIcon width={24} height={24} />
               </Button.Icon>
@@ -98,6 +110,65 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                 </Button.Text>
               </Button.Root>
             </S.ButtonFilterContainer>
+
+            <Modal
+              isVisible={togglePaymentMethodsModal}
+              onCloseModal={handleTogglePaymentMethodsModal}
+              swipeDirection="down"
+              modalPosition="bottom"
+            >
+              <S.ModalContent>
+                <S.DraggableTopBar />
+
+                <Button.Root
+                  type="unfilled"
+                  color={theme.colors.primary}
+                  align="start"
+                >
+                  <S.PaymentMethodIconContainer>
+                    <Button.Icon>
+                      <S.PaymentMethodIcon name="dollar-sign" />
+                    </Button.Icon>
+                  </S.PaymentMethodIconContainer>
+
+                  <Button.Text color={theme.colors.dark}>Dinheiro</Button.Text>
+                </Button.Root>
+
+                <Button.Root
+                  type="outline"
+                  color={theme.colors.primary}
+                  align="start"
+                >
+                  <S.PaymentMethodIconContainer>
+                    <Button.Icon>
+                      <S.PaymentMethodIcon name="credit-card" />
+                    </Button.Icon>
+                  </S.PaymentMethodIconContainer>
+
+                  <Button.Text color={theme.colors.dark}>Cartão</Button.Text>
+                </Button.Root>
+
+                <Button.Root
+                  type="unfilled"
+                  color={theme.colors.primary}
+                  align="start"
+                >
+                  <S.PaymentMethodIconContainer>
+                    <Button.Icon>
+                      <PixIcon />
+                    </Button.Icon>
+                  </S.PaymentMethodIconContainer>
+
+                  <Button.Text color={theme.colors.dark}>Pix</Button.Text>
+                </Button.Root>
+
+                <S.ChoicePaymentMethodButton>
+                  <S.ChoicePaymentMethodLabel>
+                    Escolher
+                  </S.ChoicePaymentMethodLabel>
+                </S.ChoicePaymentMethodButton>
+              </S.ModalContent>
+            </Modal>
           </S.Content>
         </TouchableWithoutFeedback>
       </S.Container>
