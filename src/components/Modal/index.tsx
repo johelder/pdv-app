@@ -8,6 +8,7 @@ export const Modal = ({
   onCloseModal,
   swipeDirection,
   children,
+  modalPosition,
 }: IModalProps) => {
   return (
     <S.Container
@@ -15,6 +16,7 @@ export const Modal = ({
       onBackButtonPress={onCloseModal}
       onBackdropPress={onCloseModal}
       swipeDirection={swipeDirection}
+      modalPosition={modalPosition}
     >
       {children}
     </S.Container>

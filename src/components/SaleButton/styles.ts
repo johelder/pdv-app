@@ -59,7 +59,7 @@ export const SaleTotal = styled.Text`
 
 export const SaleModalContainer = styled.View`
   width: 100%;
-  height: 450px;
+  max-height: 450px;
 
   background-color: ${({ theme }) => theme.colors.light};
 

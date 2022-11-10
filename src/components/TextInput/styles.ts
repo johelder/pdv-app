@@ -19,7 +19,7 @@ export const TextInputRootContent = styled.View<ITextInputRootProps>`
     isDisabled ? theme.colors.gray_100 : theme.colors.light};
   border-radius: 25px;
 
-  padding: 12px 10px;
+  padding: 0 10px;
 
   flex-direction: row;
   align-items: center;

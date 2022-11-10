@@ -3,9 +3,15 @@ import { IButtonRootProps, IButtonIconProps, IButtonTextProps } from './types';
 
 import * as S from './styles';
 
-const ButtonRoot = ({ type, color, children, ...rest }: IButtonRootProps) => {
+const ButtonRoot = ({
+  type,
+  color,
+  align = 'center',
+  children,
+  ...rest
+}: IButtonRootProps) => {
   return (
-    <S.ButtonRootContainer type={type} color={color} {...rest}>
+    <S.ButtonRootContainer type={type} color={color} align={align} {...rest}>
       {children}
     </S.ButtonRootContainer>
   );
