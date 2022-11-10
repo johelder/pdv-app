@@ -5,6 +5,7 @@ export interface IButtonRootProps extends TouchableOpacityProps {
   children: ReactNode;
   type: 'filled' | 'unfilled' | 'outline';
   color?: string;
+  align?: 'start' | 'center' | 'end';
 }
 
 export interface IButtonIconProps {

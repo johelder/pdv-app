@@ -10,12 +10,15 @@ export const ButtonRootContainer = styled.TouchableOpacity<IButtonRootProps>`
 
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: ${({ align }) =>
+    align === 'center' ? 'center' : `flex-${align}`};
+
+  background-color: ${({ theme }) => theme.colors.light};
 
   ${({ type, color }) =>
     type === 'filled' &&
     css`
-      background: ${color};
+      background-color: ${color};
       border: 1px solid ${color};
     `}
 
@@ -27,13 +30,13 @@ export const ButtonRootContainer = styled.TouchableOpacity<IButtonRootProps>`
     `}
 `;
 
-export const ButtonIconContainer = styled.View`
-  margin-right: 10px;
-`;
+export const ButtonIconContainer = styled.View``;
 
 export const ButtonTextContainer = styled.Text<IButtonTextProps>`
   font-family: ${({ theme }) => theme.fonts.primary.semiBold};
   font-size: 18px;
 
   color: ${({ color }) => color};
+
+  margin-left: 10px;
 `;
