@@ -48,8 +48,14 @@ export const bagSlice = createSlice({
 
       state.products[productIndex].quantity -= 1;
     },
+    removeProductWithAllQuantity: (state, action: PayloadAction<number>) => {
+      state.products = state.products.filter(
+        product => product.id !== action.payload,
+      );
+    },
   },
 });
 
-export const { addProduct, removeProduct } = bagSlice.actions;
+export const { addProduct, removeProduct, removeProductWithAllQuantity } =
+  bagSlice.actions;
 export const bagReducer = bagSlice.reducer;
