@@ -64,7 +64,7 @@ export const ButtonFilterContainer = styled.View`
 
 export const ModalContent = styled.View`
   width: 100%;
-  height: 40%;
+  height: auto;
 
   background-color: ${({ theme }) => theme.colors.background};
   border-top-left-radius: 10px;
@@ -102,7 +102,9 @@ export const PaymentMethodIcon = styled(Feather)`
   color: ${({ theme }) => theme.colors.dark};
 `;
 
-export const ChoicePaymentMethodButton = styled.TouchableOpacity``;
+export const ChoicePaymentMethodButton = styled.TouchableOpacity`
+  margin-bottom: 40px;
+`;
 
 export const ChoicePaymentMethodLabel = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary.bold};
