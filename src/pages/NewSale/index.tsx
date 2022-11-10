@@ -1,8 +1,20 @@
-import React, { useCallback, useState } from 'react';
-import { Keyboard, StatusBar, TouchableWithoutFeedback } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  Keyboard,
+  ListRenderItemInfo,
+  StatusBar,
+  TouchableWithoutFeedback,
+} from 'react-native';
+
+import { useAppSelector } from '../../hooks/appSelector';
+import { useDispatch } from 'react-redux';
+import { removeProductWithAllQuantity } from '../../features/bag/bag-slice';
 
 import { Button, Checkbox, Modal, TextInput } from '../../components';
+import { formatMoney } from '../../utils';
+
 import { TNewSaleProps } from './types';
+import { IProductBag } from '../../features/bag/types';
 
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
 import PixIcon from '../../assets/images/pix.svg';
@@ -17,6 +29,17 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
   const [togglePaymentMethodsModal, setTogglePaymentMethodsModal] =
     useState(false);
 
+  const products = useAppSelector(state => state.bag.products);
+  const dispatch = useDispatch();
+
+  const productsTotal = useMemo(() => {
+    return products.reduce(
+      (accumulatorTotal, product) =>
+        (accumulatorTotal += product.price * product.quantity),
+      0,
+    );
+  }, [products]);
+
   const theme = useTheme();
 
   const handleSelectCheckbox = () => {
@@ -30,6 +53,56 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
   const handleRedirectToSelectProducts = useCallback(() => {
     navigation.navigate('SelectProducts');
   }, [navigation]);
+
+  const handleRemoveProduct = useCallback(
+    (productId: number) => {
+      dispatch(removeProductWithAllQuantity(productId));
+    },
+    [dispatch],
+  );
+
+  const renderAddedProduct = useCallback(
+    ({ item: addedProduct }: ListRenderItemInfo<IProductBag>) => {
+      const formattedPrice = formatMoney(addedProduct.price / 100);
+
+      return (
+        <S.AddedProductContainer>
+          <S.AddedProductLabelsContainer>
+            <S.AddedProductLabel>
+              {addedProduct.quantity}x {addedProduct.name}
+            </S.AddedProductLabel>
+            <S.AddedProductLabel>{formattedPrice}</S.AddedProductLabel>
+          </S.AddedProductLabelsContainer>
+
+          <S.RemoveProductButton
+            onPress={() => handleRemoveProduct(addedProduct.id)}
+          >
+            <S.RemoveProductLabel>Remover</S.RemoveProductLabel>
+          </S.RemoveProductButton>
+        </S.AddedProductContainer>
+      );
+    },
+    [handleRemoveProduct],
+  );
+
+  const renderAddedProductsListHeader = useCallback(() => {
+    return (
+      <S.AddedProductsListHeaderContainer>
+        <S.AddedProductListTitle>Produtos selecionados</S.AddedProductListTitle>
+      </S.AddedProductsListHeaderContainer>
+    );
+  }, []);
+
+  const renderAddedProductsListFooter = useCallback(() => {
+    const formattedTotal = formatMoney(productsTotal / 100);
+
+    return (
+      <S.AddedProductsListFooterContainer>
+        <S.ProductsTotalLabel>Valor total </S.ProductsTotalLabel>
+        <S.ProductsTotal>{formattedTotal}</S.ProductsTotal>
+      </S.AddedProductsListFooterContainer>
+    );
+  }, [productsTotal]);
 
   return (
     <>
@@ -90,18 +163,28 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
               </TextInput.Root>
             </S.ChangeContainer>
 
-            <S.EmptyBagContainer>
-              <S.EmptyBagAnimation
-                source={emptyBagAnimationSource}
-                style={{ width: 300 }}
-                autoPlay
-                loop
-              />
+            {!products.length ? (
+              <S.EmptyBagContainer>
+                <S.EmptyBagAnimation
+                  source={emptyBagAnimationSource}
+                  style={{ width: 300 }}
+                  autoPlay
+                  loop
+                />
 
-              <S.EmptyBagLabel>
-                Você ainda não adicionou nenhum{'\n'}produto a essa venda
-              </S.EmptyBagLabel>
-            </S.EmptyBagContainer>
+                <S.EmptyBagLabel>
+                  Você ainda não adicionou nenhum{'\n'}produto a essa venda
+                </S.EmptyBagLabel>
+              </S.EmptyBagContainer>
+            ) : (
+              <S.AddedProducts
+                data={products}
+                keyExtractor={product => String(product.id)}
+                renderItem={renderAddedProduct}
+                ListHeaderComponent={renderAddedProductsListHeader}
+                ListFooterComponent={renderAddedProductsListFooter}
+              />
+            )}
 
             <S.ButtonFilterContainer>
               <Button.Root type="filled" color={theme.colors.primary}>
