@@ -4,6 +4,7 @@ export type TRootStackParamList = {
   Home: undefined;
   NewSale: undefined;
   SelectProducts: undefined;
+  RegisterProduct: undefined;
 };
 
 export type TNavigationProps<T extends keyof TRootStackParamList> =
