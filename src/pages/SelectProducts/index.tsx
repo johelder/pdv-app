@@ -109,7 +109,6 @@ export const SelectProducts = () => {
           </TextInput.Icon>
 
           <TextInput.Input
-            name="searchProduct"
             placeholder="Pesquisar um produto"
             placeholderTextColor={theme.colors.dark}
             autoCorrect={false}
