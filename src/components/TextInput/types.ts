@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Control, FieldError } from 'react-hook-form';
+import { Control, FieldError, FieldPath } from 'react-hook-form';
 import { TextInputProps } from 'react-native';
 import { IRegisterProductData } from '../../pages/RegisterProduct/types';
 
@@ -13,7 +13,7 @@ export interface ITextInputIconProps {
 }
 
 export interface ITextInputInputProps extends TextInputProps {
-  name: keyof IRegisterProductData | string;
+  name?: FieldPath<IRegisterProductData>;
   control?: Control<IRegisterProductData>;
 }
 

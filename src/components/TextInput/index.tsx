@@ -30,7 +30,7 @@ const TextInputIcon = ({ children }: ITextInputIconProps) => {
 TextInputIcon.displayName = 'TextInput.Icon';
 
 const TextInputInput = ({ name, control, ...rest }: ITextInputInputProps) => {
-  if (control) {
+  if (control && name) {
     return (
       <Controller
         name={name}
