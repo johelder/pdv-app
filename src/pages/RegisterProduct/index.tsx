@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StatusBar } from 'react-native';
 
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { defaultValues, productSchema } from './productSchema';
+import { SelectCategoriesContext } from '../../contexts/selectCategories';
 
 import { Button, TextInput } from '../../components';
 import { IRegisterProductData, TRegisterProductProps } from './types';
@@ -17,18 +18,19 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterProductData>({
+  } = useForm({
     defaultValues,
     resolver: yupResolver(productSchema),
   });
+  const { selectedCategories } = useContext(SelectCategoriesContext);
 
   const theme = useTheme();
 
   const handleRegisterProduct = async (
     registerProductData: IRegisterProductData,
   ) => {
-    console.log(errors);
-    console.log(registerProductData);
+    console.log({ registerProductData });
+    console.log({ selectedCategories });
   };
 
   const handleRedirectToSelectCategory = () => {
@@ -108,14 +110,22 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
             <S.InputLabel>Descrição do produto:</S.InputLabel>
 
             <S.ProductDescriptionInputContainer>
-              <S.ProductDescriptionInput
-                placeholder="Digite uma descrição para o produto"
-                placeholderTextColor={theme.colors.gray_400}
-                autoCorrect={false}
-                autoComplete="off"
-                autoCapitalize="none"
-                multiline
-                maxLength={240}
+              <Controller
+                name="description"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <S.ProductDescriptionInput
+                    placeholder="Digite uma descrição para o produto"
+                    placeholderTextColor={theme.colors.gray_400}
+                    autoCorrect={false}
+                    autoComplete="off"
+                    autoCapitalize="none"
+                    multiline
+                    maxLength={240}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
               />
             </S.ProductDescriptionInputContainer>
           </S.InputContainer>
