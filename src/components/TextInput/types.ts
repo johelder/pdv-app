@@ -13,7 +13,7 @@ export interface ITextInputIconProps {
 }
 
 export interface ITextInputInputProps extends TextInputProps {
-  name: keyof IRegisterProductData;
+  name: keyof IRegisterProductData | string;
   control?: Control<IRegisterProductData>;
 }
 
