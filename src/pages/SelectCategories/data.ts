@@ -1,0 +1,32 @@
+export const categories = [
+  {
+    id: 1,
+    name: 'Categoria 1',
+    description: 'Descrição 2',
+    status: 'active',
+    createdAt: '2022-11-11T20:41:08.000Z',
+    updatedAt: '2022-11-11T20:41:08.000Z',
+    merchant_id: 1,
+    products: [],
+  },
+  {
+    id: 2,
+    name: 'Categoria 2',
+    description: 'Descrição 2',
+    status: 'active',
+    createdAt: '2022-11-11T20:41:08.000Z',
+    updatedAt: '2022-11-11T20:41:08.000Z',
+    merchant_id: 1,
+    products: [],
+  },
+  {
+    id: 3,
+    name: 'Categoria 3',
+    description: 'Descrição 2',
+    status: 'active',
+    createdAt: '2022-11-11T20:41:08.000Z',
+    updatedAt: '2022-11-11T20:41:08.000Z',
+    merchant_id: 1,
+    products: [],
+  },
+];
