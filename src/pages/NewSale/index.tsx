@@ -147,6 +147,7 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
               <S.NeedChangeContainer>
                 <S.ChangeLabel>Essa venda não precisa de troco</S.ChangeLabel>
                 <Checkbox
+                  type="circle"
                   isChecked={isCheckboxSelected}
                   onPress={handleSelectCheckbox}
                 />
@@ -157,6 +158,7 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                   <S.ChangeIcon name="dollar-sign" />
                 </TextInput.Icon>
                 <TextInput.Input
+                  name="searchProduct"
                   placeholder={!isCheckboxSelected ? 'Valor do troco' : '0,00'}
                   keyboardType="numeric"
                   editable={!isCheckboxSelected}
