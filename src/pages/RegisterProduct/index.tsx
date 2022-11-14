@@ -6,13 +6,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { defaultValues, productSchema } from './productSchema';
 
 import { Button, TextInput } from '../../components';
-import { IRegisterProductData } from './types';
+import { IRegisterProductData, TRegisterProductProps } from './types';
 
 import { useTheme } from 'styled-components';
 
 import * as S from './styles';
 
-export const RegisterProduct = () => {
+export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
   const {
     control,
     handleSubmit,
@@ -31,6 +31,10 @@ export const RegisterProduct = () => {
     console.log(registerProductData);
   };
 
+  const handleRedirectToSelectCategory = () => {
+    navigation.navigate('SelectCategories');
+  };
+
   return (
     <>
       <StatusBar
@@ -38,6 +42,7 @@ export const RegisterProduct = () => {
         backgroundColor="transparent"
         translucent
       />
+
       <S.Container>
         <S.Content>
           <Button.Root type="filled" color={theme.colors.primary}>
@@ -115,7 +120,11 @@ export const RegisterProduct = () => {
             </S.ProductDescriptionInputContainer>
           </S.InputContainer>
 
-          <Button.Root type="outline" color={theme.colors.categories}>
+          <Button.Root
+            type="outline"
+            color={theme.colors.categories}
+            onPress={handleRedirectToSelectCategory}
+          >
             <Button.Text color={theme.colors.categories}>
               Escolha uma categoria para o produto
             </Button.Text>
