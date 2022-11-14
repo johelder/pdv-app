@@ -2,7 +2,14 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TRootStackParamList } from './types';
 
-import { Home, NewSale, RegisterProduct, SelectProducts } from '../pages';
+import {
+  Home,
+  NewSale,
+  RegisterProduct,
+  SelectProducts,
+  SelectCategories,
+} from '../pages';
+
 import { useTheme } from 'styled-components';
 
 const Stack = createNativeStackNavigator<TRootStackParamList>();
@@ -47,7 +54,14 @@ export const AppStackRoutes = () => {
           name="RegisterProduct"
           component={RegisterProduct}
           options={{
-            title: 'Cadastro de produto',
+            title: 'Cadastrar produto',
+          }}
+        />
+        <Stack.Screen
+          name="SelectCategories"
+          component={SelectCategories}
+          options={{
+            title: 'Selecionar categoria',
           }}
         />
       </Stack.Group>
