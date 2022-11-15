@@ -7,7 +7,7 @@ import { defaultValues, productSchema } from './productSchema';
 import { SelectCategoriesContext } from '../../contexts/selectCategories';
 
 import { Button, TextInput } from '../../components';
-import { IRegisterProductData, TRegisterProductProps } from './types';
+import { IProductData, TRegisterProductProps } from './types';
 
 import { useTheme } from 'styled-components';
 
@@ -26,9 +26,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
 
   const theme = useTheme();
 
-  const handleRegisterProduct = async (
-    registerProductData: IRegisterProductData,
-  ) => {
+  const handleRegisterProduct = async (registerProductData: IProductData) => {
     console.log({ registerProductData });
     console.log({ selectedCategories });
   };
@@ -62,14 +60,20 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
               <S.InputLabel>Nome do produto:</S.InputLabel>
 
               <TextInput.Root>
-                <TextInput.Input
+                <Controller
                   name="name"
-                  placeholder="Digite o nome do produto"
-                  placeholderTextColor={theme.colors.gray_400}
-                  autoCorrect={false}
-                  autoComplete="off"
-                  autoCapitalize="words"
                   control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextInput.Input
+                      placeholder="Digite o nome do produto"
+                      placeholderTextColor={theme.colors.gray_400}
+                      autoCorrect={false}
+                      autoComplete="off"
+                      autoCapitalize="words"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
                 />
                 {errors.name && <TextInput.Error error={errors.name} />}
               </TextInput.Root>
@@ -79,14 +83,20 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
               <S.InputLabel>Código do produto:</S.InputLabel>
 
               <TextInput.Root>
-                <TextInput.Input
+                <Controller
                   name="code"
-                  placeholder="Digite um código para o produto"
-                  placeholderTextColor={theme.colors.gray_400}
-                  autoCorrect={false}
-                  autoComplete="off"
-                  autoCapitalize="none"
                   control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextInput.Input
+                      placeholder="Digite um código para o produto"
+                      placeholderTextColor={theme.colors.gray_400}
+                      autoCorrect={false}
+                      autoComplete="off"
+                      autoCapitalize="none"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
                 />
               </TextInput.Root>
             </S.InputContainer>
@@ -95,14 +105,21 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
               <S.InputLabel>Valor do produto:</S.InputLabel>
 
               <TextInput.Root>
-                <TextInput.Input
+                <Controller
                   name="price"
-                  placeholder="Digite um valor para o produto"
-                  placeholderTextColor={theme.colors.gray_400}
-                  autoCorrect={false}
-                  autoComplete="off"
-                  autoCapitalize="none"
                   control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextInput.Input
+                      keyboardType="numeric"
+                      placeholder="Digite um valor para o produto"
+                      placeholderTextColor={theme.colors.gray_400}
+                      autoCorrect={false}
+                      autoComplete="off"
+                      autoCapitalize="none"
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
                 />
 
                 {errors.price && <TextInput.Error error={errors.price} />}
