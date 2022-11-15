@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Controller } from 'react-hook-form';
-
 import {
   ITextInputRootProps,
   ITextInputIconProps,
@@ -29,23 +27,7 @@ const TextInputIcon = ({ children }: ITextInputIconProps) => {
 
 TextInputIcon.displayName = 'TextInput.Icon';
 
-const TextInputInput = ({ name, control, ...rest }: ITextInputInputProps) => {
-  if (control && name) {
-    return (
-      <Controller
-        name={name}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <S.TextInputContainer
-            value={value}
-            onChangeText={onChange}
-            {...rest}
-          />
-        )}
-      />
-    );
-  }
-
+const TextInputInput = ({ ...rest }: ITextInputInputProps) => {
   return <S.TextInputContainer {...rest} />;
 };
 
