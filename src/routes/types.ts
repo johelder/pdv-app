@@ -6,7 +6,9 @@ export type TRootStackParamList = {
   SelectProducts: undefined;
   RegisterProduct: undefined;
   SelectCategories: undefined;
-  RegisterCategory: undefined;
+  RegisterCategory: {
+    redirect: 'RegisterCategory' | 'RegisteredCategories';
+  };
 };
 
 export type TNavigationProps<T extends keyof TRootStackParamList> =
