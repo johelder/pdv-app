@@ -23,7 +23,7 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
   };
 
   const handleRedirectToRegisterCategory = () => {
-    navigation.navigate('RegisterCategory');
+    navigation.navigate('RegisterCategory', { redirect: 'RegisterCategory' });
   };
 
   const renderCategory = useCallback(
