@@ -22,6 +22,10 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
     navigation.goBack();
   };
 
+  const handleRedirectToRegisterCategory = () => {
+    navigation.navigate('RegisterCategory');
+  };
+
   const renderCategory = useCallback(
     ({ item: category }: ListRenderItemInfo<ICategory>) => {
       return (
@@ -43,7 +47,11 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
       <S.Content>
         <S.CategoriesContainer>
           <S.CategoriesContent>
-            <Button.Root type="outline" color={theme.colors.categories}>
+            <Button.Root
+              type="outline"
+              color={theme.colors.categories}
+              onPress={handleRedirectToRegisterCategory}
+            >
               <Button.Icon>
                 <S.RegisterCategoryIcon name="plus" />
               </Button.Icon>
