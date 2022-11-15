@@ -3,13 +3,22 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
 
-export const Container = styled.SafeAreaView``;
+export const Container = styled.SafeAreaView`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 
 export const Content = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
 })`
-  padding: 15px;
+  height: 100%;
+  padding: 20px 15px 0;
 `;
+
+export const FormContent = styled.View``;
 
 export const ImageIcon = styled(Feather)`
   font-size: 24px;
@@ -42,7 +51,7 @@ export const ProductDescriptionInputContainer = styled(Shadow).attrs(
 
 export const ProductDescriptionInput = styled.TextInput`
   width: 100%;
-  height: 85px;
+  height: 100px;
 
   font-family: ${({ theme }) => theme.fonts.primary.semiBold};
   font-size: 16px;
@@ -57,8 +66,4 @@ export const ProductDescriptionInput = styled.TextInput`
 export const CategoryIcon = styled(MaterialIcons)`
   font-size: 24px;
   color: ${({ theme }) => theme.colors.categories};
-`;
-
-export const RegisterProductButtonContainer = styled.View`
-  margin-top: 40px;
 `;

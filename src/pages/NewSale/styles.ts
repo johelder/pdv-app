@@ -6,14 +6,17 @@ import LottieView from 'lottie-react-native';
 import { IProductBag } from '../../features/bag/types';
 
 export const Container = styled.SafeAreaView`
-  flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
 export const Content = styled.View`
-  padding: 15px;
-  flex: 1;
+  height: 100%;
+  padding: 20px 15px 0;
+
+  justify-content: space-between;
 `;
+
+export const FormContent = styled.View``;
 
 export const AddProductIcon = styled(Feather)`
   font-size: 24px;
@@ -56,10 +59,6 @@ export const EmptyBagLabel = styled.Text`
   color: ${({ theme }) => theme.colors.dark};
 
   margin-bottom: 40px;
-`;
-
-export const ButtonFilterContainer = styled.View`
-  margin-bottom: 15px;
 `;
 
 export const ModalContent = styled.View`

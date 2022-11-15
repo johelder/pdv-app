@@ -4,7 +4,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import { FlatList, FlatListProps } from 'react-native';
 import { ICategory } from '../SelectProducts/types';
 
-export const Container = styled.SafeAreaView``;
+export const Container = styled.SafeAreaView`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
 
 export const Content = styled.View`
   height: 100%;
