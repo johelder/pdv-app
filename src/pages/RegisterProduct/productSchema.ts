@@ -14,6 +14,6 @@ export const productSchema = yup.object().shape({
 export const defaultValues = {
   name: '',
   code: '',
-  price: 0,
+  price: '',
   description: '',
 };

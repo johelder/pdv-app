@@ -2,9 +2,9 @@ import { TNavigationProps } from '../../routes/types';
 
 export type TRegisterProductProps = TNavigationProps<'RegisterProduct'>;
 
-export interface IRegisterProductData {
+export interface IProductData {
   name: string;
   code: string;
-  price: number;
+  price: string;
   description: string;
 }
