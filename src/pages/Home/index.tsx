@@ -30,6 +30,10 @@ export const Home = ({ navigation }: THomeProps) => {
     });
   };
 
+  const handleRedirectToRegisteredCategories = () => {
+    navigation.navigate('RegisteredCategories');
+  };
+
   const renderSale = useCallback(
     ({ item: sale }: ListRenderItemInfo<ISale>) => {
       return <SaleButton sale={sale} />;
@@ -71,7 +75,10 @@ export const Home = ({ navigation }: THomeProps) => {
               type="register-category"
               onPress={handleRedirectToRegisterCategory}
             />
-            <NavigationButton type="registered" />
+            <NavigationButton
+              type="registered"
+              onPress={handleRedirectToRegisteredCategories}
+            />
           </S.NavigationButtonsContainer>
         </S.Header>
 
