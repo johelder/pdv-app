@@ -9,6 +9,7 @@ export type TRootStackParamList = {
   RegisterCategory: {
     redirect: 'RegisterCategory' | 'RegisteredCategories';
   };
+  RegisteredCategories: undefined;
 };
 
 export type TNavigationProps<T extends keyof TRootStackParamList> =

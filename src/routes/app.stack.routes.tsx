@@ -9,6 +9,7 @@ import {
   SelectProducts,
   SelectCategories,
   RegisterCategory,
+  RegisteredCategories,
 } from '../pages';
 
 import { useTheme } from 'styled-components';
@@ -70,6 +71,13 @@ export const AppStackRoutes = () => {
           component={RegisterCategory}
           options={{
             title: 'Cadastrar categoria',
+          }}
+        />
+        <Stack.Screen
+          name="RegisteredCategories"
+          component={RegisteredCategories}
+          options={{
+            title: 'Categorias cadastradas',
           }}
         />
       </Stack.Group>
