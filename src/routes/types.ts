@@ -10,6 +10,10 @@ export type TRootStackParamList = {
     redirect: 'RegisterCategory' | 'RegisteredCategories';
   };
   RegisteredCategories: undefined;
+  RegisteredProducts: {
+    categoryId: number;
+    categoryName: string;
+  };
 };
 
 export type TNavigationProps<T extends keyof TRootStackParamList> =
