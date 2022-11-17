@@ -5,6 +5,7 @@ import { RegisterProduct } from './RegisterProduct';
 import { SelectCategories } from './SelectCategories';
 import { RegisterCategory } from './RegisterCategory';
 import { RegisteredCategories } from './RegisteredCategories';
+import { RegisteredProducts } from './RegisteredProducts';
 
 export {
   Home,
@@ -14,4 +15,5 @@ export {
   SelectCategories,
   RegisterCategory,
   RegisteredCategories,
+  RegisteredProducts,
 };
