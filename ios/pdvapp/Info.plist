@@ -39,8 +39,6 @@
 	<string>vende.ai precisa de permissão para usar sua câmera.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>vende.ai precisa de permissão para acessar as fotos da sua galeria.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>vende.ai precisa de permissão para acessar as fotos da sua galeria.</string>
 	<key>UIAppFonts</key>
