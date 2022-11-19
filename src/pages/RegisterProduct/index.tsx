@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,6 +27,19 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
   const theme = useTheme();
 
   const handleRegisterProduct = async (registerProductData: IProductData) => {
+    if (!selectedCategories.length) {
+      Alert.alert(
+        'Escolha uma categoria para seu produto',
+        'Você pode escolher ou cadastrar uma nova categoria para seu produto.',
+        [
+          {
+            text: 'Escolher uma categoria',
+            onPress: () => handleRedirectToSelectCategory(),
+          },
+        ],
+      );
+    }
+
     console.log({ registerProductData });
     console.log({ selectedCategories });
   };
