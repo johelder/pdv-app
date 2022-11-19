@@ -50,9 +50,9 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
     setTogglePaymentMethodsModal(prevModalState => !prevModalState);
   }, []);
 
-  const handleRedirectToSelectProducts = useCallback(() => {
+  const handleRedirectToSelectProducts = () => {
     navigation.navigate('SelectProducts');
-  }, [navigation]);
+  };
 
   const handleRemoveProduct = useCallback(
     (productId: number) => {
@@ -117,84 +117,87 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
       <S.Container>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <S.Content>
-            <Button.Root
-              type="filled"
-              color={theme.colors.primary}
-              onPress={handleRedirectToSelectProducts}
-            >
-              <Button.Icon>
-                <S.AddProductIcon name="shopping-bag" />
-              </Button.Icon>
+            <S.FormContent>
+              <Button.Root
+                type="filled"
+                color={theme.colors.primary}
+                onPress={handleRedirectToSelectProducts}
+              >
+                <Button.Icon>
+                  <S.AddProductIcon name="shopping-bag" />
+                </Button.Icon>
 
-              <Button.Text color={theme.colors.light}>
-                Adicionar produtos
-              </Button.Text>
-            </Button.Root>
-
-            <Button.Root
-              type="filled"
-              color={theme.colors.primary}
-              onPress={handleTogglePaymentMethodsModal}
-            >
-              <Button.Icon>
-                <PaymentIcon width={24} height={24} />
-              </Button.Icon>
-
-              <Button.Text color={theme.colors.light}>Pagamento</Button.Text>
-            </Button.Root>
-
-            <S.ChangeContainer>
-              <S.NeedChangeContainer>
-                <S.ChangeLabel>Essa venda não precisa de troco</S.ChangeLabel>
-                <Checkbox
-                  isChecked={isCheckboxSelected}
-                  onPress={handleSelectCheckbox}
-                />
-              </S.NeedChangeContainer>
-
-              <TextInput.Root isDisabled={isCheckboxSelected}>
-                <TextInput.Icon>
-                  <S.ChangeIcon name="dollar-sign" />
-                </TextInput.Icon>
-                <TextInput.Input
-                  placeholder={!isCheckboxSelected ? 'Valor do troco' : '0,00'}
-                  keyboardType="numeric"
-                  editable={!isCheckboxSelected}
-                  placeholderTextColor={theme.colors.gray_400}
-                />
-              </TextInput.Root>
-            </S.ChangeContainer>
-
-            {!products.length ? (
-              <S.EmptyBagContainer>
-                <S.EmptyBagAnimation
-                  source={emptyBagAnimationSource}
-                  style={{ width: 300 }}
-                  autoPlay
-                  loop
-                />
-
-                <S.EmptyBagLabel>
-                  Você ainda não adicionou nenhum{'\n'}produto a essa venda
-                </S.EmptyBagLabel>
-              </S.EmptyBagContainer>
-            ) : (
-              <S.AddedProducts
-                data={products}
-                keyExtractor={product => String(product.id)}
-                renderItem={renderAddedProduct}
-                ListHeaderComponent={renderAddedProductsListHeader}
-                ListFooterComponent={renderAddedProductsListFooter}
-              />
-            )}
-
-            <S.ButtonFilterContainer>
-              <Button.Root type="filled" color={theme.colors.primary}>
                 <Button.Text color={theme.colors.light}>
-                  Finalizar venda
+                  Adicionar produtos
                 </Button.Text>
               </Button.Root>
-            </S.ButtonFilterContainer>
+
+              <Button.Root
+                type="filled"
+                color={theme.colors.primary}
+                onPress={handleTogglePaymentMethodsModal}
+              >
+                <Button.Icon>
+                  <PaymentIcon width={24} height={24} />
+                </Button.Icon>
+
+                <Button.Text color={theme.colors.light}>Pagamento</Button.Text>
+              </Button.Root>
+
+              <S.ChangeContainer>
+                <S.NeedChangeContainer>
+                  <S.ChangeLabel>Essa venda não precisa de troco</S.ChangeLabel>
+                  <Checkbox
+                    type="circle"
+                    isChecked={isCheckboxSelected}
+                    onPress={handleSelectCheckbox}
+                  />
+                </S.NeedChangeContainer>
+
+                <TextInput.Root isDisabled={isCheckboxSelected}>
+                  <TextInput.Icon>
+                    <S.ChangeIcon name="dollar-sign" />
+                  </TextInput.Icon>
+                  <TextInput.Input
+                    placeholder={
+                      !isCheckboxSelected ? 'Valor do troco' : '0,00'
+                    }
+                    keyboardType="numeric"
+                    editable={!isCheckboxSelected}
+                    placeholderTextColor={theme.colors.gray_400}
+                  />
+                </TextInput.Root>
+              </S.ChangeContainer>
+
+              {!products.length ? (
+                <S.EmptyBagContainer>
+                  <S.EmptyBagAnimation
+                    source={emptyBagAnimationSource}
+                    style={{ width: 300 }}
+                    autoPlay
+                    loop
+                  />
+
+                  <S.EmptyBagLabel>
+                    Você ainda não adicionou nenhum{'\n'}produto a essa venda
+                  </S.EmptyBagLabel>
+                </S.EmptyBagContainer>
+              ) : (
+                <S.AddedProducts
+                  data={products}
+                  keyExtractor={product => String(product.id)}
+                  renderItem={renderAddedProduct}
+                  ListHeaderComponent={renderAddedProductsListHeader}
+                  ListFooterComponent={renderAddedProductsListFooter}
+                />
+              )}
+            </S.FormContent>
+
+            <Button.Root type="filled" color={theme.colors.primary}>
+              <Button.Text color={theme.colors.light}>
+                Finalizar venda
+              </Button.Text>
+            </Button.Root>
 
             <Modal
               isVisible={togglePaymentMethodsModal}

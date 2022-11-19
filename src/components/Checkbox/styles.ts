@@ -9,9 +9,10 @@ export const Container = styled.TouchableOpacity<ICheckboxProps>`
 
   background-color: ${({ theme, isChecked }) =>
     isChecked ? theme.colors.primary : theme.colors.light};
+
   border: ${StyleSheet.hairlineWidth}px solid
     ${({ theme }) => theme.colors.primary};
-  border-radius: 15px;
+  border-radius: ${({ type }) => (type === 'circle' ? 15 : 5)}px;
 
   align-items: center;
   justify-content: center;

@@ -2,7 +2,17 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TRootStackParamList } from './types';
 
-import { Home, NewSale, SelectProducts } from '../pages';
+import {
+  Home,
+  NewSale,
+  RegisterProduct,
+  SelectProducts,
+  SelectCategories,
+  RegisterCategory,
+  RegisteredCategories,
+  RegisteredProducts,
+} from '../pages';
+
 import { useTheme } from 'styled-components';
 
 const Stack = createNativeStackNavigator<TRootStackParamList>();
@@ -42,6 +52,39 @@ export const AppStackRoutes = () => {
           options={{
             title: 'Selecionar produtos',
           }}
+        />
+        <Stack.Screen
+          name="RegisterProduct"
+          component={RegisterProduct}
+          options={{
+            title: 'Cadastrar produto',
+          }}
+        />
+        <Stack.Screen
+          name="SelectCategories"
+          component={SelectCategories}
+          options={{
+            title: 'Selecionar categoria',
+          }}
+        />
+        <Stack.Screen
+          name="RegisterCategory"
+          component={RegisterCategory}
+          options={{
+            title: 'Cadastrar categoria',
+          }}
+        />
+        <Stack.Screen
+          name="RegisteredCategories"
+          component={RegisteredCategories}
+          options={{
+            title: 'Categorias cadastradas',
+          }}
+        />
+        <Stack.Screen
+          name="RegisteredProducts"
+          component={RegisteredProducts}
+          options={({ route }) => ({ title: route.params.categoryName })}
         />
       </Stack.Group>
     </Stack.Navigator>

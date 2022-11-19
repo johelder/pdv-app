@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { FieldError } from 'react-hook-form';
 import { TextInputProps } from 'react-native';
 
 export interface ITextInputRootProps {
@@ -11,3 +12,7 @@ export interface ITextInputIconProps {
 }
 
 export interface ITextInputInputProps extends TextInputProps {}
+
+export interface ITextInputErrorProps {
+  error: FieldError;
+}

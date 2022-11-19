@@ -10,4 +10,5 @@ export interface IProduct {
 
 export interface IProductProps {
   product: IProduct;
+  readonly?: boolean;
 }

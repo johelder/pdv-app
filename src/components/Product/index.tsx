@@ -9,7 +9,7 @@ import { formatMoney } from '../../utils';
 
 import * as S from './styles';
 
-export const Product = ({ product }: IProductProps) => {
+export const Product = ({ product, readonly = false }: IProductProps) => {
   const dispatch = useDispatch();
   const products = useAppSelector(state => state.bag.products);
 
@@ -43,21 +43,23 @@ export const Product = ({ product }: IProductProps) => {
         <S.Price>{formattedProductPrice}</S.Price>
         <S.Description>{product.description}</S.Description>
 
-        <S.MultiButtonContainer>
-          <S.RemoveProductButton
-            onPress={() => handleRemoveProduct(product.id)}
-          >
-            <S.RemoveIcon name="minus-circle" />
-          </S.RemoveProductButton>
+        {!readonly && (
+          <S.MultiButtonContainer>
+            <S.RemoveProductButton
+              onPress={() => handleRemoveProduct(product.id)}
+            >
+              <S.RemoveIcon name="minus-circle" />
+            </S.RemoveProductButton>
 
-          <S.ProductQuantityLabel>
-            {currentProduct?.quantity ?? 0}
-          </S.ProductQuantityLabel>
+            <S.ProductQuantityLabel>
+              {currentProduct?.quantity ?? 0}
+            </S.ProductQuantityLabel>
 
-          <S.AddProductButton onPress={() => handleAddProduct(product)}>
-            <S.AddIcon name="plus-circle" />
-          </S.AddProductButton>
-        </S.MultiButtonContainer>
+            <S.AddProductButton onPress={() => handleAddProduct(product)}>
+              <S.AddIcon name="plus-circle" />
+            </S.AddProductButton>
+          </S.MultiButtonContainer>
+        )}
       </S.DescriptionContainer>
     </S.Container>
   );
