@@ -1,5 +1,12 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
+
+import {
+  launchCamera,
+  launchImageLibrary,
+  CameraOptions,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
 
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,6 +20,10 @@ import { useTheme } from 'styled-components';
 
 import * as S from './styles';
 
+const choosePhotoMethodOptions: CameraOptions = {
+  mediaType: 'photo',
+};
+
 export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
   const {
     control,
@@ -22,9 +33,41 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
     defaultValues,
     resolver: yupResolver(productSchema),
   });
+
+  const [selectedProductPhoto, setSelectedProductPhoto] =
+    useState<ImagePickerResponse>({});
   const { selectedCategories } = useContext(SelectCategoriesContext);
 
   const theme = useTheme();
+
+  const handleOpenCamera = async () => {
+    await launchCamera(choosePhotoMethodOptions, setSelectedProductPhoto);
+  };
+
+  const handleOpenGallery = async () => {
+    await launchImageLibrary(choosePhotoMethodOptions, setSelectedProductPhoto);
+  };
+
+  const handleChoosePhotoMethodDialog = () => {
+    Alert.alert(
+      'Foto do produto',
+      'Escolha ou tire uma foto para seu produto',
+      [
+        {
+          text: 'Tirar foto',
+          onPress: () => handleOpenCamera(),
+        },
+        {
+          text: 'Escolher a partir da galeria',
+          onPress: () => handleOpenGallery(),
+        },
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+      ],
+    );
+  };
 
   const handleRegisterProduct = async (registerProductData: IProductData) => {
     if (!selectedCategories.length) {
@@ -42,6 +85,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
 
     console.log({ registerProductData });
     console.log({ selectedCategories });
+    console.log({ selectedProductPhoto });
   };
 
   const handleRedirectToSelectCategory = useCallback(() => {
@@ -59,7 +103,11 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
       <S.Container>
         <S.Content>
           <S.FormContent>
-            <Button.Root type="filled" color={theme.colors.primary}>
+            <Button.Root
+              type="filled"
+              color={theme.colors.primary}
+              onPress={handleChoosePhotoMethodDialog}
+            >
               <Button.Icon>
                 <S.ImageIcon name="image" />
               </Button.Icon>
