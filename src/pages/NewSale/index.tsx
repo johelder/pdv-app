@@ -13,7 +13,7 @@ import { removeProductWithAllQuantity } from '../../features/bag/bag-slice';
 import { Button, Checkbox, Modal, TextInput } from '../../components';
 import { formatMoney } from '../../utils';
 
-import { TNewSaleProps } from './types';
+import { IPaymentMethod, TNewSaleProps } from './types';
 import { IProductBag } from '../../features/bag/types';
 
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
@@ -28,6 +28,8 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [togglePaymentMethodsModal, setTogglePaymentMethodsModal] =
     useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState<IPaymentMethod>({} as IPaymentMethod);
 
   const products = useAppSelector(state => state.bag.products);
   const dispatch = useDispatch();
@@ -44,6 +46,10 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
 
   const handleSelectCheckbox = () => {
     setIsCheckboxSelected(prevCheckboxState => !prevCheckboxState);
+  };
+
+  const handleChoosePaymentMethod = (paymentMethod: IPaymentMethod) => {
+    setSelectedPaymentMethod(paymentMethod);
   };
 
   const handleTogglePaymentMethodsModal = useCallback(() => {
@@ -209,9 +215,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                 <S.DraggableTopBar />
 
                 <Button.Root
-                  type="unfilled"
+                  type={selectedPaymentMethod.id === 1 ? 'outline' : 'unfilled'}
                   color={theme.colors.primary}
                   align="start"
+                  onPress={() =>
+                    handleChoosePaymentMethod({ id: 1, name: 'Dinheiro' })
+                  }
                 >
                   <S.PaymentMethodIconContainer>
                     <Button.Icon>
@@ -223,9 +232,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                 </Button.Root>
 
                 <Button.Root
-                  type="outline"
+                  type={selectedPaymentMethod.id === 2 ? 'outline' : 'unfilled'}
                   color={theme.colors.primary}
                   align="start"
+                  onPress={() =>
+                    handleChoosePaymentMethod({ id: 2, name: 'Cartão' })
+                  }
                 >
                   <S.PaymentMethodIconContainer>
                     <Button.Icon>
@@ -237,9 +249,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                 </Button.Root>
 
                 <Button.Root
-                  type="unfilled"
+                  type={selectedPaymentMethod.id === 3 ? 'outline' : 'unfilled'}
                   color={theme.colors.primary}
                   align="start"
+                  onPress={() =>
+                    handleChoosePaymentMethod({ id: 3, name: 'Pix' })
+                  }
                 >
                   <S.PaymentMethodIconContainer>
                     <Button.Icon>
