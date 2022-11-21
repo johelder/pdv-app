@@ -13,7 +13,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { category } from '../../services/category';
 
 import { Button, TextInput } from '../../components';
-import { ICategoryData, TPageStatus, TRegisterCategoryProps } from './types';
+import { ICategoryData, TRegisterCategoryProps } from './types';
+import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
 
@@ -24,7 +25,6 @@ export const RegisterCategory = ({
   route,
 }: TRegisterCategoryProps) => {
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
-
   const {
     control,
     handleSubmit,
@@ -144,20 +144,28 @@ export const RegisterCategory = ({
               </S.InputContainer>
             </S.FormContent>
 
-            <Button.Root
-              type="filled"
-              color={theme.colors.categories}
-              onPress={handleSubmit(handleRegisterCategory)}
-              disabled={pageStatus === 'loading'}
-            >
-              {pageStatus === 'loading' ? (
-                <ActivityIndicator />
-              ) : (
-                <Button.Text color={theme.colors.light}>
-                  Cadastrar categoria
-                </Button.Text>
+            <S.FooterContainer>
+              {pageStatus === 'error' && (
+                <S.ErrorLabel>
+                  Ocorreu um erro ao cadastrar, tente novamente mais tarde
+                </S.ErrorLabel>
               )}
-            </Button.Root>
+
+              <Button.Root
+                type="filled"
+                color={theme.colors.categories}
+                onPress={handleSubmit(handleRegisterCategory)}
+                disabled={pageStatus === 'loading'}
+              >
+                {pageStatus === 'loading' ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Button.Text color={theme.colors.light}>
+                    Cadastrar categoria
+                  </Button.Text>
+                )}
+              </Button.Root>
+            </S.FooterContainer>
           </S.Content>
         </S.Container>
       </TouchableWithoutFeedback>
