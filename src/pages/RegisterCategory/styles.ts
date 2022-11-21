@@ -5,11 +5,13 @@ export const Container = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Content = styled.View`
-  height: 100%;
+export const Content = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+})`
   padding: 20px 15px 0;
-
-  justify-content: space-between;
 `;
 
 export const FormContent = styled.View``;

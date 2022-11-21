@@ -7,3 +7,5 @@ export interface ICategoryData {
   code: string;
   description: string;
 }
+
+export type TPageStatus = 'idle' | 'loading' | 'success' | 'error';
