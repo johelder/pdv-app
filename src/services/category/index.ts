@@ -1,5 +1,5 @@
-import { ICategory } from '../../pages/SelectProducts/types';
 import { api } from '../api';
+import { ICategory } from '../../pages/SelectProducts/types';
 import { ICategoryPayload } from './types';
 
 export const category = {
@@ -34,6 +34,22 @@ export const category = {
       return {
         ok: false,
         data: [],
+        error,
+      };
+    }
+  },
+
+  findById: async (categoryId: number) => {
+    try {
+      const response = await api.get<ICategory>(`/categories/${categoryId}`);
+
+      return {
+        ok: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        ok: false,
         error,
       };
     }
