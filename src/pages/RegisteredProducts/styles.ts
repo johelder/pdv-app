@@ -31,3 +31,12 @@ export const ProductContainer = styled.View`
 
   margin-bottom: 10px;
 `;
+
+export const ErrorLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
+  font-size: 14px;
+  text-align: center;
+
+  color: ${({ theme }) => theme.colors.attention};
+  padding: 0 20px;
+`;
