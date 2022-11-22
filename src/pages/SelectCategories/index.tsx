@@ -1,8 +1,8 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
+import { category } from '../../services/category';
 import { Button, Checkbox } from '../../components';
-import { categories } from './data';
 import { SelectCategoriesContext } from '../../contexts/selectCategories';
 
 import { ICategory } from '../SelectProducts/types';
@@ -13,6 +13,8 @@ import { useTheme } from 'styled-components';
 import * as S from './styles';
 
 export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
+  const [categories, setCategories] = useState<ICategory[]>([]);
+
   const { toggleCategory, isAddedCategory } = useContext(
     SelectCategoriesContext,
   );
@@ -25,6 +27,20 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
   const handleRedirectToRegisterCategory = () => {
     navigation.navigate('RegisterCategory', { redirect: 'RegisterCategory' });
   };
+
+  const getCategories = useCallback(async () => {
+    const response = await category.findAll();
+
+    if (!response.ok) {
+      return;
+    }
+
+    setCategories(response.data);
+  }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
 
   const renderCategory = useCallback(
     ({ item: category }: ListRenderItemInfo<ICategory>) => {
