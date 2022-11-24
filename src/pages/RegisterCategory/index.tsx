@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   StatusBar,
   ActivityIndicator,
@@ -12,11 +12,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { category } from '../../services/category';
 
-import { Button, TextInput } from '../../components';
+import { Button, TextInput, Modal} from '../../components';
 import { ICategoryData, TRegisterCategoryProps } from './types';
 import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
+
+import errorAnimationSource from '../../assets/animations/error-animation.json';
+
 
 import * as S from './styles';
 
@@ -31,6 +34,8 @@ export const RegisterCategory = ({
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(categorySchema) });
 
+  const [toggleErrorModal, setToggleErrorModal] = useState(false);
+
   const theme = useTheme();
 
   const handleRedirect = () => {
@@ -43,13 +48,19 @@ export const RegisterCategory = ({
     navigation.navigate('RegisteredCategories');
   };
 
+
+  const handleToggleErrorModal = useCallback(() => {
+    setToggleErrorModal(prevModalState => !prevModalState);
+
+  }, []);
+
   const handleRegisterCategory = async (categoryData: ICategoryData) => {
     setPageStatus('loading');
     const response = await category.create(categoryData);
 
     if (!response.ok) {
       setPageStatus('error');
-
+      setToggleErrorModal(true);
       return;
     }
 
@@ -143,6 +154,33 @@ export const RegisterCategory = ({
                 </S.CategoryDescriptionInputContainer>
               </S.InputContainer>
             </S.FormContent>
+
+            {pageStatus === 'error' && (
+               <Modal
+                 isVisible={toggleErrorModal}
+                 onCloseModal={handleToggleErrorModal}
+                 swipeDirection="down"
+                 modalPosition="center"
+                 >
+                   <S.ModalContent>
+                   <S.CloseModalButton onPress={handleToggleErrorModal}>
+                <S.CloseIcon name="x" />
+              </S.CloseModalButton>
+                    <S.ErrorAnimation
+                      source={errorAnimationSource}
+                      style={{ width: 100 }}
+                      autoPlay
+                      loop
+                    />
+                    <S.ModalTextContainer>
+                      <S.ModalTitle>Algo deu errado!</S.ModalTitle>
+                      <S.ModalMessage>Não foi possível cadastrar seu produto, tente novamente mais tarde</S.ModalMessage>
+                    </S.ModalTextContainer>
+
+                   </S.ModalContent>
+                </Modal>
+              )}
+
 
             <S.FooterContainer>
               {pageStatus === 'error' && (
