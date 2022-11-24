@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Keyboard,
   StatusBar,
@@ -90,6 +91,8 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
           },
         ],
       );
+
+      return;
     }
 
     const productFormData = new FormData();
@@ -263,15 +266,27 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
               </Button.Root>
             </S.FormContent>
 
-            <Button.Root
-              type="filled"
-              color={theme.colors.products}
-              onPress={handleSubmit(handleRegisterProduct)}
-            >
-              <Button.Text color={theme.colors.light}>
-                Cadastrar produto
-              </Button.Text>
-            </Button.Root>
+            <S.FooterContainer>
+              {pageStatus === 'error' && (
+                <S.ErrorLabel>
+                  Ocorreu um erro ao cadastrar, tente novamente mais tarde
+                </S.ErrorLabel>
+              )}
+
+              <Button.Root
+                type="filled"
+                color={theme.colors.products}
+                onPress={handleSubmit(handleRegisterProduct)}
+              >
+                {pageStatus === 'loading' ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Button.Text color={theme.colors.light}>
+                    Cadastrar produto
+                  </Button.Text>
+                )}
+              </Button.Root>
+            </S.FooterContainer>
           </S.Content>
         </S.Container>
       </TouchableWithoutFeedback>
