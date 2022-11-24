@@ -74,7 +74,7 @@ export const RegisterCategory = ({
               </S.Title>
 
               <S.InputContainer>
-                <S.InputLabel>Nome do categoria:</S.InputLabel>
+                <S.InputLabel>Nome da categoria:</S.InputLabel>
 
                 <TextInput.Root>
                   <Controller
@@ -98,7 +98,7 @@ export const RegisterCategory = ({
               </S.InputContainer>
 
               <S.InputContainer>
-                <S.InputLabel>Código do categoria:</S.InputLabel>
+                <S.InputLabel>Código da categoria:</S.InputLabel>
 
                 <TextInput.Root>
                   <Controller
@@ -120,7 +120,7 @@ export const RegisterCategory = ({
               </S.InputContainer>
 
               <S.InputContainer>
-                <S.InputLabel>Descrição do produto:</S.InputLabel>
+                <S.InputLabel>Descrição da categoria:</S.InputLabel>
 
                 <S.CategoryDescriptionInputContainer>
                   <Controller
