@@ -38,7 +38,23 @@ export const RegisterCategory = ({
   const [toggleModal, setToggleModal] = useState(false);
 
   const theme = useTheme();
+  const feedbackModalMessages = {
+    loading: {
+      title: 'Quase lá!',
+      description: 'Estamos cadastrando sua nova categoria',
+    },
 
+    error: {
+      title: 'Algo deu errado!',
+      description:
+        'Não foi possível cadastrar esta categoria, tente novamente mais tarde',
+    },
+
+    success: {
+      title: 'Sucesso!',
+      description: 'Categoria cadastrada',
+    },
+  };
   const handleRedirect = () => {
     if (route.params.redirect === 'RegisterCategory') {
       navigation.goBack();
@@ -53,78 +69,57 @@ export const RegisterCategory = ({
     setToggleModal(prevModalState => !prevModalState);
   }, []);
 
-  const renderLoadingFeedbackModal = () => (
+  const renderFeedbackModal = () => (
     <Modal
       isVisible={toggleModal}
       onCloseModal={handleToggleModal}
-      swipeDirection="down"
       modalPosition="center"
     >
       <S.ModalContent>
         <S.CloseModalButton onPress={handleToggleModal}>
           <S.CloseIcon name="x" />
         </S.CloseModalButton>
-        <S.ModalAnimation
-          source={loadingAnimationSource}
-          style={{ width: 100 }}
-          autoPlay
-          loop
-        />
-        <S.ModalTextContainer>
-          <S.ModalTitle>Quase lá!</S.ModalTitle>
-          <S.ModalMessage>Estamos cadastrando sua categoria</S.ModalMessage>
-        </S.ModalTextContainer>
-      </S.ModalContent>
-    </Modal>
-  );
+        {pageStatus === 'loading' && (
+          <S.ModalAnimation
+            source={loadingAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
 
-  const renderErrorFeedbackModal = () => (
-    <Modal
-      isVisible={toggleModal}
-      onCloseModal={handleToggleModal}
-      swipeDirection="down"
-      modalPosition="center"
-    >
-      <S.ModalContent>
-        <S.CloseModalButton onPress={handleToggleModal}>
-          <S.CloseIcon name="x" />
-        </S.CloseModalButton>
-        <S.ModalAnimation
-          source={errorAnimationSource}
-          style={{ width: 100 }}
-          autoPlay
-          loop
-        />
+        {pageStatus === 'error' && (
+          <S.ModalAnimation
+            source={errorAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
+
+        {pageStatus === 'success' && (
+          <S.ModalAnimation
+            source={successAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
         <S.ModalTextContainer>
-          <S.ModalTitle>Algo deu errado!</S.ModalTitle>
+          <S.ModalTitle>
+            {pageStatus === 'error'
+              ? feedbackModalMessages.error.title
+              : pageStatus === 'success'
+              ? feedbackModalMessages.success.title
+              : feedbackModalMessages.loading.title}
+          </S.ModalTitle>
           <S.ModalMessage>
-            Não foi possível cadastrar seu produto, tente novamente mais tarde
+            {pageStatus === 'error'
+              ? feedbackModalMessages.error.description
+              : pageStatus === 'success'
+              ? feedbackModalMessages.success.description
+              : feedbackModalMessages.loading.description}
           </S.ModalMessage>
-        </S.ModalTextContainer>
-      </S.ModalContent>
-    </Modal>
-  );
-
-  const renderSuccessFeedbackModal = () => (
-    <Modal
-      isVisible={toggleModal}
-      onCloseModal={handleToggleModal}
-      swipeDirection="down"
-      modalPosition="center"
-    >
-      <S.ModalContent>
-        <S.CloseModalButton onPress={handleToggleModal}>
-          <S.CloseIcon name="x" />
-        </S.CloseModalButton>
-        <S.ModalAnimation
-          source={successAnimationSource}
-          style={{ width: 100 }}
-          autoPlay
-          loop
-        />
-        <S.ModalTextContainer>
-          <S.ModalTitle>Sucesso!</S.ModalTitle>
-          <S.ModalMessage>Sua categoria foi adicionada</S.ModalMessage>
         </S.ModalTextContainer>
       </S.ModalContent>
     </Modal>
@@ -230,11 +225,7 @@ export const RegisterCategory = ({
                 </S.CategoryDescriptionInputContainer>
               </S.InputContainer>
             </S.FormContent>
-
-            {pageStatus === 'loading' && renderLoadingFeedbackModal()}
-            {pageStatus === 'error' && renderErrorFeedbackModal()}
-            {pageStatus === 'success' && renderSuccessFeedbackModal()}
-
+            {pageStatus != 'idle' && renderFeedbackModal()}
             <S.FooterContainer>
               {pageStatus === 'error' && (
                 <S.ErrorLabel>
