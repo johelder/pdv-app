@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
+  ActivityIndicator,
   Keyboard,
   ListRenderItemInfo,
   StatusBar,
@@ -12,9 +13,11 @@ import { removeProductWithAllQuantity } from '../../features/bag/bag-slice';
 
 import { Button, Checkbox, Modal, TextInput } from '../../components';
 import { formatMoney } from '../../utils';
+import { sale } from '../../services/sale';
 
 import { IPaymentMethod, TNewSaleProps } from './types';
 import { IProductBag } from '../../features/bag/types';
+import { TPageStatus } from '../../types/general';
 
 import PaymentIcon from '../../assets/images/dollar-funds.svg';
 import PixIcon from '../../assets/images/pix.svg';
@@ -29,7 +32,9 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
   const [togglePaymentMethodsModal, setTogglePaymentMethodsModal] =
     useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
-    useState<IPaymentMethod>({} as IPaymentMethod);
+    useState<IPaymentMethod>({ id: 1, name: 'Dinheiro' });
+  const [change, setChange] = useState('');
+  const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
 
   const products = useAppSelector(state => state.bag.products);
   const dispatch = useDispatch();
@@ -66,6 +71,31 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
     },
     [dispatch],
   );
+
+  const handleCreateNewSale = async () => {
+    const formattedProducts = products.map(product => ({
+      id: product.id,
+      quantity: product.quantity,
+    }));
+
+    setPageStatus('loading');
+
+    const response = await sale.create({
+      products: formattedProducts,
+      payment_type: selectedPaymentMethod,
+      hasChange: !isCheckboxSelected,
+      changeValue: Number(change.replace(',', '.')),
+    });
+
+    if (!response.ok) {
+      setPageStatus('error');
+
+      return;
+    }
+
+    setPageStatus('success');
+    navigation.navigate('Home');
+  };
 
   const renderAddedProduct = useCallback(
     ({ item: addedProduct }: ListRenderItemInfo<IProductBag>) => {
@@ -171,6 +201,8 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                     keyboardType="numeric"
                     editable={!isCheckboxSelected}
                     placeholderTextColor={theme.colors.gray_400}
+                    onChangeText={setChange}
+                    value={change}
                   />
                 </TextInput.Root>
               </S.ChangeContainer>
@@ -199,11 +231,27 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
               )}
             </S.FormContent>
 
-            <Button.Root type="filled" color={theme.colors.primary}>
-              <Button.Text color={theme.colors.light}>
-                Finalizar venda
-              </Button.Text>
-            </Button.Root>
+            <S.FooterContainer>
+              {pageStatus === 'error' && (
+                <S.ErrorLabel>
+                  Ocorreu um erro ao cadastrar, tente novamente mais tarde
+                </S.ErrorLabel>
+              )}
+
+              <Button.Root
+                type="filled"
+                color={theme.colors.primary}
+                onPress={handleCreateNewSale}
+              >
+                {pageStatus === 'loading' ? (
+                  <ActivityIndicator />
+                ) : (
+                  <Button.Text color={theme.colors.light}>
+                    Finalizar venda
+                  </Button.Text>
+                )}
+              </Button.Root>
+            </S.FooterContainer>
 
             <Modal
               isVisible={togglePaymentMethodsModal}
@@ -265,7 +313,9 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
                   <Button.Text color={theme.colors.dark}>Pix</Button.Text>
                 </Button.Root>
 
-                <S.ChoicePaymentMethodButton>
+                <S.ChoicePaymentMethodButton
+                  onPress={handleTogglePaymentMethodsModal}
+                >
                   <S.ChoicePaymentMethodLabel>
                     Escolher
                   </S.ChoicePaymentMethodLabel>
