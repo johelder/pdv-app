@@ -21,11 +21,15 @@ import { defaultValues, productSchema } from './productSchema';
 import { SelectCategoriesContext } from '../../contexts/selectCategories';
 import { product } from '../../services/product';
 
-import { Button, TextInput } from '../../components';
+import { Button, Modal, TextInput } from '../../components';
 import { IProductData, TRegisterProductProps } from './types';
 import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
+
+import errorAnimationSource from '../../assets/animations/error-animation.json';
+import successAnimationSource from '../../assets/animations/success-animation.json';
+import loadingAnimationSource from '../../assets/animations/loading-animation.json';
 
 import * as S from './styles';
 
@@ -47,8 +51,31 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
     useState<ImagePickerResponse>({});
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
   const { selectedCategories } = useContext(SelectCategoriesContext);
+  const [toggleModal, setToggleModal] = useState(false);
 
   const theme = useTheme();
+
+  const feedbackModalMessages = {
+    loading: {
+      title: 'Quase lá!',
+      description: 'Estamos cadastrando seu novo produto',
+    },
+
+    error: {
+      title: 'Algo deu errado!',
+      description:
+        'Não foi possível cadastrar este produto, tente novamente mais tarde',
+    },
+
+    success: {
+      title: 'Sucesso!',
+      description: 'Produto cadastrado',
+    },
+  };
+
+  const handleToggleModal = useCallback(() => {
+    setToggleModal(prevModalState => !prevModalState);
+  }, []);
 
   const handleOpenCamera = async () => {
     await launchCamera(choosePhotoMethodOptions, setSelectedProductPhoto);
@@ -78,6 +105,62 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
       ],
     );
   };
+
+  const renderFeedbackModal = () => (
+    <Modal
+      isVisible={toggleModal}
+      onCloseModal={handleToggleModal}
+      modalPosition="center"
+    >
+      <S.ModalContent>
+        <S.CloseModalButton onPress={handleToggleModal}>
+          <S.CloseIcon name="x" />
+        </S.CloseModalButton>
+        {pageStatus === 'loading' && (
+          <S.ModalAnimation
+            source={loadingAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
+
+        {pageStatus === 'error' && (
+          <S.ModalAnimation
+            source={errorAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
+
+        {pageStatus === 'success' && (
+          <S.ModalAnimation
+            source={successAnimationSource}
+            style={{ width: 100 }}
+            autoPlay
+            loop
+          />
+        )}
+        <S.ModalTextContainer>
+          <S.ModalTitle>
+            {pageStatus === 'error'
+              ? feedbackModalMessages.error.title
+              : pageStatus === 'success'
+              ? feedbackModalMessages.success.title
+              : feedbackModalMessages.loading.title}
+          </S.ModalTitle>
+          <S.ModalMessage>
+            {pageStatus === 'error'
+              ? feedbackModalMessages.error.description
+              : pageStatus === 'success'
+              ? feedbackModalMessages.success.description
+              : feedbackModalMessages.loading.description}
+          </S.ModalMessage>
+        </S.ModalTextContainer>
+      </S.ModalContent>
+    </Modal>
+  );
 
   const handleRegisterProduct = async (registerProductData: IProductData) => {
     if (!selectedCategories.length) {
@@ -119,6 +202,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
 
     if (!response.ok) {
       setPageStatus('error');
+      setToggleModal(true);
 
       return;
     }
@@ -265,6 +349,8 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
                 </Button.Icon>
               </Button.Root>
             </S.FormContent>
+
+            {pageStatus != 'idle' && renderFeedbackModal()}
 
             <S.FooterContainer>
               {pageStatus === 'error' && (
