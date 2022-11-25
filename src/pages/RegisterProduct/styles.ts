@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Shadow } from 'react-native-shadow-2';
+import LottieView from 'lottie-react-native';
 
 export const Container = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.colors.background};
@@ -78,4 +79,47 @@ export const ErrorLabel = styled.Text`
   margin-bottom: 10px;
 
   color: ${({ theme }) => theme.colors.attention};
+`;
+
+
+export const ModalContent = styled.View`
+  width: 100%;
+  height: auto;
+
+  background-color: ${({ theme }) => theme.colors.background};
+  border-radius: 10px;
+  align-items: center;
+  padding: 30px;
+`;
+
+export const ModalAnimation = styled(LottieView)``;
+
+
+export const ModalTextContainer = styled.View`
+  width: 100%;
+`;
+
+
+export const ModalTitle = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.bold};
+  color: ${({ theme }) => theme.colors.dark};
+  font-size: 22px;
+  margin: 20px 0 5px;
+`;
+
+export const ModalMessage = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.regular};
+  color: ${({ theme }) => theme.colors.dark};
+  font-size: 16px;
+`;
+
+export const CloseModalButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 15px;
+  top: 15px;
+`;
+
+export const CloseIcon = styled(Feather)`
+  font-size: 24px;
+  color: ${({ theme }) => theme.colors.dark};
 `;
