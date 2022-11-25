@@ -12,11 +12,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { category } from '../../services/category';
 
-import { Button, TextInput } from '../../components';
+import { Button, TextInput, Modal } from '../../components';
 import { ICategoryData, TRegisterCategoryProps } from './types';
 import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
+
+import errorAnimationSource from '../../assets/animations/error-animation.json';
+import successAnimationSource from '../../assets/animations/success-animation.json';
+import loadingAnimationSource from '../../assets/animations/loading-animation.json';
 
 import * as S from './styles';
 
@@ -31,6 +35,8 @@ export const RegisterCategory = ({
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(categorySchema) });
 
+  const [toggleModal, setToggleModal] = useState(false);
+
   const theme = useTheme();
 
   const handleRedirect = () => {
@@ -43,13 +49,94 @@ export const RegisterCategory = ({
     navigation.navigate('RegisteredCategories');
   };
 
+  const handleToggleModal = useCallback(() => {
+    setToggleModal(prevModalState => !prevModalState);
+  }, []);
+
+  const renderLoadingFeedbackModal = () => (
+    <Modal
+      isVisible={toggleModal}
+      onCloseModal={handleToggleModal}
+      swipeDirection="down"
+      modalPosition="center"
+    >
+      <S.ModalContent>
+        <S.CloseModalButton onPress={handleToggleModal}>
+          <S.CloseIcon name="x" />
+        </S.CloseModalButton>
+        <S.ModalAnimation
+          source={loadingAnimationSource}
+          style={{ width: 100 }}
+          autoPlay
+          loop
+        />
+        <S.ModalTextContainer>
+          <S.ModalTitle>Quase lá!</S.ModalTitle>
+          <S.ModalMessage>Estamos cadastrando sua categoria</S.ModalMessage>
+        </S.ModalTextContainer>
+      </S.ModalContent>
+    </Modal>
+  );
+
+  const renderErrorFeedbackModal = () => (
+    <Modal
+      isVisible={toggleModal}
+      onCloseModal={handleToggleModal}
+      swipeDirection="down"
+      modalPosition="center"
+    >
+      <S.ModalContent>
+        <S.CloseModalButton onPress={handleToggleModal}>
+          <S.CloseIcon name="x" />
+        </S.CloseModalButton>
+        <S.ModalAnimation
+          source={errorAnimationSource}
+          style={{ width: 100 }}
+          autoPlay
+          loop
+        />
+        <S.ModalTextContainer>
+          <S.ModalTitle>Algo deu errado!</S.ModalTitle>
+          <S.ModalMessage>
+            Não foi possível cadastrar seu produto, tente novamente mais tarde
+          </S.ModalMessage>
+        </S.ModalTextContainer>
+      </S.ModalContent>
+    </Modal>
+  );
+
+  const renderSuccessFeedbackModal = () => (
+    <Modal
+      isVisible={toggleModal}
+      onCloseModal={handleToggleModal}
+      swipeDirection="down"
+      modalPosition="center"
+    >
+      <S.ModalContent>
+        <S.CloseModalButton onPress={handleToggleModal}>
+          <S.CloseIcon name="x" />
+        </S.CloseModalButton>
+        <S.ModalAnimation
+          source={successAnimationSource}
+          style={{ width: 100 }}
+          autoPlay
+          loop
+        />
+        <S.ModalTextContainer>
+          <S.ModalTitle>Sucesso!</S.ModalTitle>
+          <S.ModalMessage>Sua categoria foi adicionada</S.ModalMessage>
+        </S.ModalTextContainer>
+      </S.ModalContent>
+    </Modal>
+  );
+
   const handleRegisterCategory = async (categoryData: ICategoryData) => {
     setPageStatus('loading');
     const response = await category.create(categoryData);
 
     if (!response.ok) {
       setPageStatus('error');
-
+      setToggleModal(true);
       return;
     }
 
@@ -143,6 +230,10 @@ export const RegisterCategory = ({
                 </S.CategoryDescriptionInputContainer>
               </S.InputContainer>
             </S.FormContent>
+
+            {pageStatus === 'loading' && renderLoadingFeedbackModal()}
+            {pageStatus === 'error' && renderErrorFeedbackModal()}
+            {pageStatus === 'success' && renderSuccessFeedbackModal()}
 
             <S.FooterContainer>
               {pageStatus === 'error' && (
