@@ -277,6 +277,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
                 type="filled"
                 color={theme.colors.products}
                 onPress={handleSubmit(handleRegisterProduct)}
+                disabled={pageStatus === 'loading'}
               >
                 {pageStatus === 'loading' ? (
                   <ActivityIndicator />
