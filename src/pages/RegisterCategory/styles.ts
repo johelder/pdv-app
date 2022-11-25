@@ -86,10 +86,12 @@ export const ModalContent = styled.View`
   padding: 30px;
 `;
 
-export const ErrorAnimation = styled(LottieView)``;
+export const ModalAnimation = styled(LottieView)``;
 
 
-export const ModalTextContainer = styled.View``;
+export const ModalTextContainer = styled.View`
+  width: 100%;
+`;
 
 
 export const ModalTitle = styled.Text`
@@ -107,8 +109,8 @@ export const ModalMessage = styled.Text`
 
 export const CloseModalButton = styled.TouchableOpacity`
   position: absolute;
-  right: 15;
-  top: 15;
+  right: 15px;
+  top: 15px;
 `;
 
 export const CloseIcon = styled(Feather)`
