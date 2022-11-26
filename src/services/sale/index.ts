@@ -17,4 +17,20 @@ export const sale = {
       };
     }
   },
+
+  findAll: async () => {
+    try {
+      const response = await api.get('/sales');
+
+      return {
+        ok: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
+  },
 };
