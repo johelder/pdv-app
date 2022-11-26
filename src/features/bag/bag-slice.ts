@@ -53,9 +53,18 @@ export const bagSlice = createSlice({
         product => product.id !== action.payload,
       );
     },
+    clearBag: state => {
+      state = initialState;
+
+      return state;
+    },
   },
 });
 
-export const { addProduct, removeProduct, removeProductWithAllQuantity } =
-  bagSlice.actions;
+export const {
+  addProduct,
+  removeProduct,
+  removeProductWithAllQuantity,
+  clearBag,
+} = bagSlice.actions;
 export const bagReducer = bagSlice.reducer;
