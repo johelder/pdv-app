@@ -9,7 +9,10 @@ import {
 
 import { useAppSelector } from '../../hooks/appSelector';
 import { useDispatch } from 'react-redux';
-import { removeProductWithAllQuantity } from '../../features/bag/bag-slice';
+import {
+  clearBag,
+  removeProductWithAllQuantity,
+} from '../../features/bag/bag-slice';
 
 import { Button, Checkbox, Modal, TextInput } from '../../components';
 import { formatMoney } from '../../utils';
@@ -93,8 +96,11 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
       return;
     }
 
-    setPageStatus('success');
-    navigation.navigate('Home');
+    setTimeout(() => {
+      dispatch(clearBag());
+      setPageStatus('success');
+      navigation.navigate('Home');
+    }, 1000);
   };
 
   const renderAddedProduct = useCallback(
