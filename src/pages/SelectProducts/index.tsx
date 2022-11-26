@@ -1,7 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 
 import { useAppSelector } from '../../hooks/appSelector';
+import { IProductBag } from '../../features/bag/types';
+
+import { category } from '../../services/category';
+import { product } from '../../services/product';
+import { formatMoney } from '../../utils';
 
 import {
   Button,
@@ -10,20 +15,24 @@ import {
   Product,
   TextInput,
 } from '../../components';
+
 import { IProduct } from '../../components/Product/types';
-import { ICategory } from './types';
-import { categories } from './data';
+import { ICategory, TSelectProductsProps } from './types';
+import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
 
 import * as S from './styles';
-import { IProductBag } from '../../features/bag/types';
-import { formatMoney } from '../../utils';
 
-export const SelectProducts = () => {
-  const [activeCategory, setActiveCategory] = useState({} as ICategory);
+export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
   const [toggleAddedProductsModal, setToggleAddedProductsModal] =
     useState(false);
+  const [pageStatus, setPageStatus] = useState<TPageStatus>();
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [activeCategory, setActiveCategory] = useState({} as ICategory);
+  const [search, setSearch] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+
   const products = useAppSelector(state => state.bag.products);
 
   const theme = useTheme();
@@ -35,6 +44,61 @@ export const SelectProducts = () => {
   const handleActiveCategory = useCallback((category: ICategory) => {
     setActiveCategory(category);
   }, []);
+
+  const getCategories = useCallback(async () => {
+    setPageStatus('loading');
+    const response = await category.findAll();
+
+    if (!response.ok) {
+      setPageStatus('error');
+      return;
+    }
+
+    const [firstCategory] = response.data;
+
+    setTimeout(() => {
+      setCategories(response.data);
+      setActiveCategory(firstCategory);
+      setPageStatus('success');
+    }, 1000);
+  }, []);
+
+  const searchProducts = useCallback(async (search: string) => {
+    setPageStatus('loading');
+
+    const response = await product.search(search);
+
+    if (!response.ok) {
+      return;
+    }
+
+    setTimeout(() => {
+      setFilteredProducts(response.data);
+      setPageStatus('success');
+    }, 1000);
+  }, []);
+
+  const handleRedirectToNewSale = () => {
+    navigation.goBack();
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, [getCategories]);
+
+  useEffect(() => {
+    if (search === '') {
+      setFilteredProducts([]);
+
+      return;
+    }
+
+    const delayInSearch = setTimeout(() => {
+      searchProducts(search);
+    }, 800);
+
+    return () => clearTimeout(delayInSearch);
+  }, [search, searchProducts]);
 
   const renderCategory = useCallback(
     ({ item: category }: ListRenderItemInfo<ICategory>) => {
@@ -114,27 +178,45 @@ export const SelectProducts = () => {
             autoCorrect={false}
             autoComplete="off"
             autoCapitalize="none"
+            value={search}
+            onChangeText={setSearch}
           />
         </TextInput.Root>
       </S.SearchInputContainer>
 
-      <S.CategoriesContainer>
-        <S.Categories
-          data={categories}
-          renderItem={renderCategory}
-          keyExtractor={category => String(category.id)}
-        />
-      </S.CategoriesContainer>
+      {pageStatus === 'loading' && <S.Loading />}
+
+      {!search && (
+        <S.CategoriesContainer>
+          <S.Categories
+            data={categories}
+            renderItem={renderCategory}
+            keyExtractor={category => String(category.id)}
+          />
+        </S.CategoriesContainer>
+      )}
 
       <S.ProductsContainer>
         <S.Products
-          data={activeCategory.products}
+          data={!search ? activeCategory.products : filteredProducts}
           renderItem={renderProduct}
           keyExtractor={product => String(product.id)}
           numColumns={2}
           key={2}
         />
       </S.ProductsContainer>
+
+      <S.BackToSaleButtonContainer>
+        <Button.Root
+          type="filled"
+          color={theme.colors.products}
+          onPress={handleRedirectToNewSale}
+        >
+          <Button.Text color={theme.colors.light}>
+            Continuar com a compra
+          </Button.Text>
+        </Button.Root>
+      </S.BackToSaleButtonContainer>
 
       <Modal
         isVisible={toggleAddedProductsModal}

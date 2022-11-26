@@ -16,7 +16,7 @@ export const BagIcon = styled(Feather)`
 `;
 
 export const SearchInputContainer = styled.View`
-  margin: 20px 15px 0;
+  margin: 20px 15px;
 `;
 
 export const SearchIcon = styled(Feather)`
@@ -24,9 +24,7 @@ export const SearchIcon = styled(Feather)`
   color: ${({ theme }) => theme.colors.dark};
 `;
 
-export const CategoriesContainer = styled.View`
-  margin-top: 20px;
-`;
+export const CategoriesContainer = styled.View``;
 
 export const Categories = styled(
   FlatList as new (props: FlatListProps<ICategory>) => FlatList<ICategory>,
@@ -121,3 +119,13 @@ export const AddedProduct = styled.Text`
 `;
 
 export const AddedProductPrice = styled(AddedProduct)``;
+
+export const Loading = styled.ActivityIndicator`
+  margin: 20px;
+
+  color: ${({ theme }) => theme.colors.products};
+`;
+
+export const BackToSaleButtonContainer = styled.View`
+  margin: 0 15px;
+`;

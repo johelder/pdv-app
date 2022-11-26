@@ -21,4 +21,20 @@ export const product = {
       };
     }
   },
+
+  search: async (search: string) => {
+    try {
+      const response = await api.get('/products', { params: { search } });
+
+      return {
+        ok: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
+  },
 };
