@@ -39,9 +39,11 @@ export const Product = ({ product, readonly = false }: IProductProps) => {
       </S.ImageContainer>
 
       <S.DescriptionContainer>
-        <S.Name>{product.name}</S.Name>
-        <S.Price>{formattedProductPrice}</S.Price>
-        <S.Description>{product.description}</S.Description>
+        <S.ProductDescription>
+          <S.Name>{product.name}</S.Name>
+          <S.Price>{formattedProductPrice}</S.Price>
+          <S.Description>{product.description}</S.Description>
+        </S.ProductDescription>
 
         {!readonly && (
           <S.MultiButtonContainer>
