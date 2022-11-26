@@ -1,16 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar, ListRenderItemInfo } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
+import { sale } from '../../services/sale';
 import { NavigationButton, SaleButton } from '../../components';
 import { formatMoney, formatToLongDate } from '../../utils';
+
 import { THomeProps, ISale } from './types';
+import { TPageStatus } from '../../types/general';
 
 import Logo from '../../assets/images/logo.svg';
-import { sales } from './data';
 
 import * as S from './styles';
 
 export const Home = ({ navigation }: THomeProps) => {
+  const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
+  const [sales, setSales] = useState<ISale[]>([]);
+
+  const isScreenFocused = useIsFocused();
+
   const dailyBillingTotal = formatMoney(
     sales.reduce((salesTotal, sale) => (salesTotal += sale.total / 100), 0),
   );
@@ -33,6 +41,27 @@ export const Home = ({ navigation }: THomeProps) => {
   const handleRedirectToRegisteredCategories = () => {
     navigation.navigate('RegisteredCategories');
   };
+
+  const getSales = useCallback(async () => {
+    setPageStatus('loading');
+
+    const response = await sale.findAll();
+
+    if (!response.ok) {
+      setPageStatus('error');
+
+      return;
+    }
+
+    setSales(response.data);
+    setPageStatus('success');
+  }, []);
+
+  useEffect(() => {
+    if (isScreenFocused) {
+      getSales();
+    }
+  }, [getSales, isScreenFocused]);
 
   const renderSale = useCallback(
     ({ item: sale }: ListRenderItemInfo<ISale>) => {
@@ -91,6 +120,8 @@ export const Home = ({ navigation }: THomeProps) => {
             data={sales}
             renderItem={renderSale}
             keyExtractor={sale => String(sale.id)}
+            onRefresh={getSales}
+            refreshing={pageStatus === 'loading'}
           />
         </S.SalesContainer>
       </S.Container>
