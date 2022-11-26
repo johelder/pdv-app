@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { category } from '../../services/category';
 import { Button, Checkbox } from '../../components';
@@ -18,6 +19,8 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
   const { toggleCategory, isAddedCategory } = useContext(
     SelectCategoriesContext,
   );
+  const isScreenFocused = useIsFocused();
+
   const theme = useTheme();
 
   const handleRedirectToRegisterProduct = () => {
@@ -39,8 +42,10 @@ export const SelectCategories = ({ navigation }: TSelectCategoriesProps) => {
   }, []);
 
   useEffect(() => {
-    getCategories();
-  }, [getCategories]);
+    if (isScreenFocused) {
+      getCategories();
+    }
+  }, [getCategories, isScreenFocused]);
 
   const renderCategory = useCallback(
     ({ item: category }: ListRenderItemInfo<ICategory>) => {
