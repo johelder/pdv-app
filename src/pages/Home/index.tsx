@@ -64,10 +64,10 @@ export const Home = ({ navigation }: THomeProps) => {
   }, [getSales, isScreenFocused]);
 
   const renderSale = useCallback(
-    ({ item: sale }: ListRenderItemInfo<ISale>) => {
-      return <SaleButton sale={sale} />;
+    ({ item: sale, index }: ListRenderItemInfo<ISale>) => {
+      return <SaleButton sale={sale} dailyPosition={sales.length - index} />;
     },
-    [],
+    [sales.length],
   );
 
   return (
