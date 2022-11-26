@@ -46,7 +46,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
   const [selectedProductPhoto, setSelectedProductPhoto] =
     useState<ImagePickerResponse>({});
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
-  const { selectedCategories } = useContext(SelectCategoriesContext);
+  const { selectedCategories, clearCategories } = useContext(SelectCategoriesContext);
 
   const theme = useTheme();
 
@@ -127,6 +127,7 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
     }
 
     setPageStatus('success');
+    clearCategories();
     navigation.navigate('RegisteredCategories');
   };
 
