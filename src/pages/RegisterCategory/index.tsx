@@ -210,7 +210,7 @@ export const RegisterCategory = ({
                     control={control}
                     render={({ field: { onChange, value } }) => (
                       <S.CategoryDescriptionInput
-                        placeholder="Digite uma descrição para o produto"
+                        placeholder="Digite uma descrição para a categoria"
                         placeholderTextColor={theme.colors.gray_400}
                         autoCorrect={false}
                         autoComplete="off"
