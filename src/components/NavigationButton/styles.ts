@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import Feather from 'react-native-vector-icons/Feather';
-import { IButtonNavigationColors } from '../../types';
+import { IButtonNavigationColors } from './types';
 
 export const Container = styled.TouchableOpacity<IButtonNavigationColors>`
   width: 225px;

@@ -90,26 +90,23 @@ export const Home = ({ navigation }: THomeProps) => {
             <S.DailyTotal>{dailyBillingTotal}</S.DailyTotal>
             <S.Date>{dailyDate}</S.Date>
           </S.DailyBillingContainer>
-
-          <S.NavigationButtonsContainer horizontal>
-            <NavigationButton
-              type="new-sale"
-              onPress={handleRedirectToNewSale}
-            />
-            <NavigationButton
-              type="register-product"
-              onPress={handleRedirectToRegisterProduct}
-            />
-            <NavigationButton
-              type="register-category"
-              onPress={handleRedirectToRegisterCategory}
-            />
-            <NavigationButton
-              type="registered"
-              onPress={handleRedirectToRegisteredCategories}
-            />
-          </S.NavigationButtonsContainer>
         </S.Header>
+
+        <S.NavigationButtonsContainer horizontal>
+          <NavigationButton type="new-sale" onPress={handleRedirectToNewSale} />
+          <NavigationButton
+            type="register-product"
+            onPress={handleRedirectToRegisterProduct}
+          />
+          <NavigationButton
+            type="register-category"
+            onPress={handleRedirectToRegisterCategory}
+          />
+          <NavigationButton
+            type="registered"
+            onPress={handleRedirectToRegisteredCategories}
+          />
+        </S.NavigationButtonsContainer>
 
         <S.DailySalesContainer>
           <S.DailySalesLabel>Vendas do dia</S.DailySalesLabel>

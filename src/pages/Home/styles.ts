@@ -66,7 +66,7 @@ export const NavigationButtonsContainer = styled.ScrollView.attrs({
   },
 })`
   position: absolute;
-  bottom: -58px;
+  top: 33%;
 `;
 
 export const DailySalesContainer = styled.View`
