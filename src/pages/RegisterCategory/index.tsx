@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import {
   StatusBar,
   ActivityIndicator,
@@ -12,15 +12,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { category } from '../../services/category';
 
-import { Button, TextInput, Modal } from '../../components';
+import { Button, TextInput } from '../../components';
 import { ICategoryData, TRegisterCategoryProps } from './types';
 import { TPageStatus } from '../../types/general';
 
 import { useTheme } from 'styled-components';
-
-import errorAnimationSource from '../../assets/animations/error-animation.json';
-import successAnimationSource from '../../assets/animations/success-animation.json';
-import loadingAnimationSource from '../../assets/animations/loading-animation.json';
 
 import * as S from './styles';
 
@@ -35,26 +31,8 @@ export const RegisterCategory = ({
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(categorySchema) });
 
-  const [toggleModal, setToggleModal] = useState(false);
-
   const theme = useTheme();
-  const feedbackModalMessages = {
-    loading: {
-      title: 'Quase lá!',
-      description: 'Estamos cadastrando sua nova categoria',
-    },
 
-    error: {
-      title: 'Algo deu errado!',
-      description:
-        'Não foi possível cadastrar esta categoria, tente novamente mais tarde',
-    },
-
-    success: {
-      title: 'Sucesso!',
-      description: 'Categoria cadastrada',
-    },
-  };
   const handleRedirect = () => {
     if (route.params.redirect === 'RegisterCategory') {
       navigation.goBack();
@@ -65,73 +43,12 @@ export const RegisterCategory = ({
     navigation.navigate('RegisteredCategories');
   };
 
-  const handleToggleModal = useCallback(() => {
-    setToggleModal(prevModalState => !prevModalState);
-  }, []);
-
-  const renderFeedbackModal = () => (
-    <Modal
-      isVisible={toggleModal}
-      onCloseModal={handleToggleModal}
-      modalPosition="center"
-    >
-      <S.ModalContent>
-        <S.CloseModalButton onPress={handleToggleModal}>
-          <S.CloseIcon name="x" />
-        </S.CloseModalButton>
-        {pageStatus === 'loading' && (
-          <S.ModalAnimation
-            source={loadingAnimationSource}
-            style={{ width: 100 }}
-            autoPlay
-            loop
-          />
-        )}
-
-        {pageStatus === 'error' && (
-          <S.ModalAnimation
-            source={errorAnimationSource}
-            style={{ width: 100 }}
-            autoPlay
-            loop
-          />
-        )}
-
-        {pageStatus === 'success' && (
-          <S.ModalAnimation
-            source={successAnimationSource}
-            style={{ width: 100 }}
-            autoPlay
-            loop
-          />
-        )}
-        <S.ModalTextContainer>
-          <S.ModalTitle>
-            {pageStatus === 'error'
-              ? feedbackModalMessages.error.title
-              : pageStatus === 'success'
-              ? feedbackModalMessages.success.title
-              : feedbackModalMessages.loading.title}
-          </S.ModalTitle>
-          <S.ModalMessage>
-            {pageStatus === 'error'
-              ? feedbackModalMessages.error.description
-              : pageStatus === 'success'
-              ? feedbackModalMessages.success.description
-              : feedbackModalMessages.loading.description}
-          </S.ModalMessage>
-        </S.ModalTextContainer>
-      </S.ModalContent>
-    </Modal>
-  );
-
   const handleRegisterCategory = async (categoryData: ICategoryData) => {
     setPageStatus('loading');
     const response = await category.create(categoryData);
 
     if (!response.ok) {
       setPageStatus('error');
-      setToggleModal(true);
       return;
     }
 
@@ -225,7 +142,7 @@ export const RegisterCategory = ({
                 </S.CategoryDescriptionInputContainer>
               </S.InputContainer>
             </S.FormContent>
-            {pageStatus != 'idle' && renderFeedbackModal()}
+
             <S.FooterContainer>
               {pageStatus === 'error' && (
                 <S.ErrorLabel>
