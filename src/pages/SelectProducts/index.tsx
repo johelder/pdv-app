@@ -213,7 +213,7 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
           onPress={handleRedirectToNewSale}
         >
           <Button.Text color={theme.colors.light}>
-            Continuar com a compra
+            Continuar com a venda
           </Button.Text>
         </Button.Root>
       </S.BackToSaleButtonContainer>

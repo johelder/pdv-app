@@ -120,11 +120,9 @@ export const AddedProduct = styled.Text`
 
 export const AddedProductPrice = styled(AddedProduct)``;
 
-export const Loading = styled.ActivityIndicator`
-  margin: 20px;
-
-  color: ${({ theme }) => theme.colors.products};
-`;
+export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
+  color: theme.colors.products,
+}))``;
 
 export const BackToSaleButtonContainer = styled.View`
   margin: 0 15px;
