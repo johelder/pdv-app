@@ -110,7 +110,10 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
       });
     }
 
-    productFormData.append('price', registerProductData.price);
+    productFormData.append(
+      'price',
+      registerProductData.price.replace(',', '.'),
+    );
     productFormData.append('categories', JSON.stringify(selectedCategories));
 
     setPageStatus('loading');
