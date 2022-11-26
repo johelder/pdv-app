@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Keyboard,
   ListRenderItemInfo,
+  ScrollView,
   StatusBar,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -155,181 +156,194 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
         backgroundColor="transparent"
         translucent
       />
-
       <S.Container>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <S.Content>
-            <S.FormContent>
-              <Button.Root
-                type="filled"
-                color={theme.colors.primary}
-                onPress={handleRedirectToSelectProducts}
-              >
-                <Button.Icon>
-                  <S.AddProductIcon name="shopping-bag" />
-                </Button.Icon>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <S.Content>
+              <S.FormContent>
+                <Button.Root
+                  type="filled"
+                  color={theme.colors.primary}
+                  onPress={handleRedirectToSelectProducts}
+                >
+                  <Button.Icon>
+                    <S.AddProductIcon name="shopping-bag" />
+                  </Button.Icon>
 
-                <Button.Text color={theme.colors.light}>
-                  Adicionar produtos
-                </Button.Text>
-              </Button.Root>
-
-              <Button.Root
-                type="filled"
-                color={theme.colors.primary}
-                onPress={handleTogglePaymentMethodsModal}
-              >
-                <Button.Icon>
-                  <PaymentIcon width={24} height={24} />
-                </Button.Icon>
-
-                <Button.Text color={theme.colors.light}>Pagamento</Button.Text>
-              </Button.Root>
-
-              <S.ChangeContainer>
-                <S.NeedChangeContainer>
-                  <S.ChangeLabel>Essa venda não precisa de troco</S.ChangeLabel>
-                  <Checkbox
-                    type="circle"
-                    isChecked={isCheckboxSelected}
-                    onPress={handleSelectCheckbox}
-                  />
-                </S.NeedChangeContainer>
-
-                <TextInput.Root isDisabled={isCheckboxSelected}>
-                  <TextInput.Icon>
-                    <S.ChangeIcon name="dollar-sign" />
-                  </TextInput.Icon>
-                  <TextInput.Input
-                    placeholder={
-                      !isCheckboxSelected ? 'Valor do troco' : '0,00'
-                    }
-                    keyboardType="numeric"
-                    editable={!isCheckboxSelected}
-                    placeholderTextColor={theme.colors.gray_400}
-                    onChangeText={setChange}
-                    value={change}
-                  />
-                </TextInput.Root>
-              </S.ChangeContainer>
-
-              {!products.length ? (
-                <S.EmptyBagContainer>
-                  <S.EmptyBagAnimation
-                    source={emptyBagAnimationSource}
-                    style={{ width: 300 }}
-                    autoPlay
-                    loop
-                  />
-
-                  <S.EmptyBagLabel>
-                    Você ainda não adicionou nenhum{'\n'}produto a essa venda
-                  </S.EmptyBagLabel>
-                </S.EmptyBagContainer>
-              ) : (
-                <S.AddedProducts
-                  data={products}
-                  keyExtractor={product => String(product.id)}
-                  renderItem={renderAddedProduct}
-                  ListHeaderComponent={renderAddedProductsListHeader}
-                  ListFooterComponent={renderAddedProductsListFooter}
-                />
-              )}
-            </S.FormContent>
-
-            <S.FooterContainer>
-              {pageStatus === 'error' && (
-                <S.ErrorLabel>
-                  Ocorreu um erro ao cadastrar, tente novamente mais tarde
-                </S.ErrorLabel>
-              )}
-
-              <Button.Root
-                type="filled"
-                color={theme.colors.primary}
-                onPress={handleCreateNewSale}
-              >
-                {pageStatus === 'loading' ? (
-                  <ActivityIndicator />
-                ) : (
                   <Button.Text color={theme.colors.light}>
-                    Finalizar venda
+                    Adicionar produtos
                   </Button.Text>
-                )}
-              </Button.Root>
-            </S.FooterContainer>
-
-            <Modal
-              isVisible={togglePaymentMethodsModal}
-              onCloseModal={handleTogglePaymentMethodsModal}
-              swipeDirection="down"
-              modalPosition="bottom"
-            >
-              <S.ModalContent>
-                <S.DraggableTopBar />
-
-                <Button.Root
-                  type={selectedPaymentMethod.id === 1 ? 'outline' : 'unfilled'}
-                  color={theme.colors.primary}
-                  align="start"
-                  onPress={() =>
-                    handleChoosePaymentMethod({ id: 1, name: 'Dinheiro' })
-                  }
-                >
-                  <S.PaymentMethodIconContainer>
-                    <Button.Icon>
-                      <S.PaymentMethodIcon name="dollar-sign" />
-                    </Button.Icon>
-                  </S.PaymentMethodIconContainer>
-
-                  <Button.Text color={theme.colors.dark}>Dinheiro</Button.Text>
                 </Button.Root>
 
                 <Button.Root
-                  type={selectedPaymentMethod.id === 2 ? 'outline' : 'unfilled'}
+                  type="filled"
                   color={theme.colors.primary}
-                  align="start"
-                  onPress={() =>
-                    handleChoosePaymentMethod({ id: 2, name: 'Cartão' })
-                  }
-                >
-                  <S.PaymentMethodIconContainer>
-                    <Button.Icon>
-                      <S.PaymentMethodIcon name="credit-card" />
-                    </Button.Icon>
-                  </S.PaymentMethodIconContainer>
-
-                  <Button.Text color={theme.colors.dark}>Cartão</Button.Text>
-                </Button.Root>
-
-                <Button.Root
-                  type={selectedPaymentMethod.id === 3 ? 'outline' : 'unfilled'}
-                  color={theme.colors.primary}
-                  align="start"
-                  onPress={() =>
-                    handleChoosePaymentMethod({ id: 3, name: 'Pix' })
-                  }
-                >
-                  <S.PaymentMethodIconContainer>
-                    <Button.Icon>
-                      <PixIcon />
-                    </Button.Icon>
-                  </S.PaymentMethodIconContainer>
-
-                  <Button.Text color={theme.colors.dark}>Pix</Button.Text>
-                </Button.Root>
-
-                <S.ChoicePaymentMethodButton
                   onPress={handleTogglePaymentMethodsModal}
                 >
-                  <S.ChoicePaymentMethodLabel>
-                    Escolher
-                  </S.ChoicePaymentMethodLabel>
-                </S.ChoicePaymentMethodButton>
-              </S.ModalContent>
-            </Modal>
-          </S.Content>
-        </TouchableWithoutFeedback>
+                  <Button.Icon>
+                    <PaymentIcon width={24} height={24} />
+                  </Button.Icon>
+
+                  <Button.Text color={theme.colors.light}>
+                    Pagamento
+                  </Button.Text>
+                </Button.Root>
+
+                <S.ChangeContainer>
+                  <S.NeedChangeContainer>
+                    <S.ChangeLabel>
+                      Essa venda não precisa de troco
+                    </S.ChangeLabel>
+                    <Checkbox
+                      type="circle"
+                      isChecked={isCheckboxSelected}
+                      onPress={handleSelectCheckbox}
+                    />
+                  </S.NeedChangeContainer>
+
+                  <TextInput.Root isDisabled={isCheckboxSelected}>
+                    <TextInput.Icon>
+                      <S.ChangeIcon name="dollar-sign" />
+                    </TextInput.Icon>
+                    <TextInput.Input
+                      placeholder={
+                        !isCheckboxSelected ? 'Valor do troco' : '0,00'
+                      }
+                      keyboardType="numeric"
+                      editable={!isCheckboxSelected}
+                      placeholderTextColor={theme.colors.gray_400}
+                      onChangeText={setChange}
+                      value={change}
+                    />
+                  </TextInput.Root>
+                </S.ChangeContainer>
+
+                {!products.length ? (
+                  <S.EmptyBagContainer>
+                    <S.EmptyBagAnimation
+                      source={emptyBagAnimationSource}
+                      style={{ width: 300 }}
+                      autoPlay
+                      loop
+                    />
+
+                    <S.EmptyBagLabel>
+                      Você ainda não adicionou nenhum{'\n'}produto a essa venda
+                    </S.EmptyBagLabel>
+                  </S.EmptyBagContainer>
+                ) : (
+                  <S.AddedProducts
+                    data={products}
+                    keyExtractor={product => String(product.id)}
+                    renderItem={renderAddedProduct}
+                    ListHeaderComponent={renderAddedProductsListHeader}
+                    ListFooterComponent={renderAddedProductsListFooter}
+                  />
+                )}
+              </S.FormContent>
+
+              <S.FooterContainer>
+                {pageStatus === 'error' && (
+                  <S.ErrorLabel>
+                    Ocorreu um erro ao cadastrar, tente novamente mais tarde
+                  </S.ErrorLabel>
+                )}
+
+                <Button.Root
+                  type="filled"
+                  color={theme.colors.primary}
+                  onPress={handleCreateNewSale}
+                >
+                  {pageStatus === 'loading' ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Button.Text color={theme.colors.light}>
+                      Finalizar venda
+                    </Button.Text>
+                  )}
+                </Button.Root>
+              </S.FooterContainer>
+
+              <Modal
+                isVisible={togglePaymentMethodsModal}
+                onCloseModal={handleTogglePaymentMethodsModal}
+                swipeDirection="down"
+                modalPosition="bottom"
+              >
+                <S.ModalContent>
+                  <S.DraggableTopBar />
+
+                  <Button.Root
+                    type={
+                      selectedPaymentMethod.id === 1 ? 'outline' : 'unfilled'
+                    }
+                    color={theme.colors.primary}
+                    align="start"
+                    onPress={() =>
+                      handleChoosePaymentMethod({ id: 1, name: 'Dinheiro' })
+                    }
+                  >
+                    <S.PaymentMethodIconContainer>
+                      <Button.Icon>
+                        <S.PaymentMethodIcon name="dollar-sign" />
+                      </Button.Icon>
+                    </S.PaymentMethodIconContainer>
+
+                    <Button.Text color={theme.colors.dark}>
+                      Dinheiro
+                    </Button.Text>
+                  </Button.Root>
+
+                  <Button.Root
+                    type={
+                      selectedPaymentMethod.id === 2 ? 'outline' : 'unfilled'
+                    }
+                    color={theme.colors.primary}
+                    align="start"
+                    onPress={() =>
+                      handleChoosePaymentMethod({ id: 2, name: 'Cartão' })
+                    }
+                  >
+                    <S.PaymentMethodIconContainer>
+                      <Button.Icon>
+                        <S.PaymentMethodIcon name="credit-card" />
+                      </Button.Icon>
+                    </S.PaymentMethodIconContainer>
+
+                    <Button.Text color={theme.colors.dark}>Cartão</Button.Text>
+                  </Button.Root>
+
+                  <Button.Root
+                    type={
+                      selectedPaymentMethod.id === 3 ? 'outline' : 'unfilled'
+                    }
+                    color={theme.colors.primary}
+                    align="start"
+                    onPress={() =>
+                      handleChoosePaymentMethod({ id: 3, name: 'Pix' })
+                    }
+                  >
+                    <S.PaymentMethodIconContainer>
+                      <Button.Icon>
+                        <PixIcon />
+                      </Button.Icon>
+                    </S.PaymentMethodIconContainer>
+
+                    <Button.Text color={theme.colors.dark}>Pix</Button.Text>
+                  </Button.Root>
+
+                  <S.ChoicePaymentMethodButton
+                    onPress={handleTogglePaymentMethodsModal}
+                  >
+                    <S.ChoicePaymentMethodLabel>
+                      Escolher
+                    </S.ChoicePaymentMethodLabel>
+                  </S.ChoicePaymentMethodButton>
+                </S.ModalContent>
+              </Modal>
+            </S.Content>
+          </TouchableWithoutFeedback>
+        </ScrollView>
       </S.Container>
     </>
   );

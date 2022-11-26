@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Alert,
   Keyboard,
+  ScrollView,
   StatusBar,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -46,7 +47,9 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
   const [selectedProductPhoto, setSelectedProductPhoto] =
     useState<ImagePickerResponse>({});
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
-  const { selectedCategories, clearCategories } = useContext(SelectCategoriesContext);
+  const { selectedCategories, clearCategories } = useContext(
+    SelectCategoriesContext,
+  );
 
   const theme = useTheme();
 
@@ -143,158 +146,160 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
         translucent
       />
 
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <S.Container>
-          <S.Content>
-            <S.FormContent>
-              <Button.Root
-                type="filled"
-                color={theme.colors.primary}
-                onPress={handleChoosePhotoMethodDialog}
-              >
-                <Button.Icon>
-                  <S.ImageIcon name="image" />
-                </Button.Icon>
+      <S.Container>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <S.Content>
+              <S.FormContent>
+                <Button.Root
+                  type="filled"
+                  color={theme.colors.primary}
+                  onPress={handleChoosePhotoMethodDialog}
+                >
+                  <Button.Icon>
+                    <S.ImageIcon name="image" />
+                  </Button.Icon>
 
-                <Button.Text color={theme.colors.light}>
-                  Inserir imagem
-                </Button.Text>
-              </Button.Root>
-
-              <S.InputContainer>
-                <S.InputLabel>Nome do produto:</S.InputLabel>
-
-                <TextInput.Root>
-                  <Controller
-                    name="name"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <TextInput.Input
-                        placeholder="Digite o nome do produto"
-                        placeholderTextColor={theme.colors.gray_400}
-                        autoCorrect={false}
-                        autoComplete="off"
-                        autoCapitalize="words"
-                        onChangeText={onChange}
-                        value={value}
-                      />
-                    )}
-                  />
-                  {errors.name && <TextInput.Error error={errors.name} />}
-                </TextInput.Root>
-              </S.InputContainer>
-
-              <S.InputContainer>
-                <S.InputLabel>Código do produto:</S.InputLabel>
-
-                <TextInput.Root>
-                  <Controller
-                    name="code"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <TextInput.Input
-                        placeholder="Digite um código para o produto"
-                        placeholderTextColor={theme.colors.gray_400}
-                        autoCorrect={false}
-                        autoComplete="off"
-                        autoCapitalize="none"
-                        onChangeText={onChange}
-                        value={value}
-                      />
-                    )}
-                  />
-                </TextInput.Root>
-              </S.InputContainer>
-
-              <S.InputContainer>
-                <S.InputLabel>Valor do produto:</S.InputLabel>
-
-                <TextInput.Root>
-                  <Controller
-                    name="price"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <TextInput.Input
-                        keyboardType="numeric"
-                        placeholder="Digite um valor para o produto"
-                        placeholderTextColor={theme.colors.gray_400}
-                        autoCorrect={false}
-                        autoComplete="off"
-                        autoCapitalize="none"
-                        onChangeText={onChange}
-                        value={value}
-                      />
-                    )}
-                  />
-
-                  {errors.price && <TextInput.Error error={errors.price} />}
-                </TextInput.Root>
-              </S.InputContainer>
-
-              <S.InputContainer>
-                <S.InputLabel>Descrição do produto:</S.InputLabel>
-
-                <S.ProductDescriptionInputContainer>
-                  <Controller
-                    name="description"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <S.ProductDescriptionInput
-                        placeholder="Digite uma descrição para o produto"
-                        placeholderTextColor={theme.colors.gray_400}
-                        autoCorrect={false}
-                        autoComplete="off"
-                        autoCapitalize="none"
-                        multiline
-                        maxLength={240}
-                        onChangeText={onChange}
-                        value={value}
-                      />
-                    )}
-                  />
-                </S.ProductDescriptionInputContainer>
-              </S.InputContainer>
-
-              <Button.Root
-                type="outline"
-                color={theme.colors.categories}
-                onPress={handleRedirectToSelectCategory}
-              >
-                <Button.Text color={theme.colors.categories}>
-                  Escolha uma categoria para o produto
-                </Button.Text>
-
-                <Button.Icon>
-                  <S.CategoryIcon name="chevron-right" />
-                </Button.Icon>
-              </Button.Root>
-            </S.FormContent>
-
-            <S.FooterContainer>
-              {pageStatus === 'error' && (
-                <S.ErrorLabel>
-                  Ocorreu um erro ao cadastrar, tente novamente mais tarde
-                </S.ErrorLabel>
-              )}
-
-              <Button.Root
-                type="filled"
-                color={theme.colors.products}
-                onPress={handleSubmit(handleRegisterProduct)}
-                disabled={pageStatus === 'loading'}
-              >
-                {pageStatus === 'loading' ? (
-                  <ActivityIndicator />
-                ) : (
                   <Button.Text color={theme.colors.light}>
-                    Cadastrar produto
+                    Inserir imagem
                   </Button.Text>
+                </Button.Root>
+
+                <S.InputContainer>
+                  <S.InputLabel>Nome do produto:</S.InputLabel>
+
+                  <TextInput.Root>
+                    <Controller
+                      name="name"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextInput.Input
+                          placeholder="Digite o nome do produto"
+                          placeholderTextColor={theme.colors.gray_400}
+                          autoCorrect={false}
+                          autoComplete="off"
+                          autoCapitalize="words"
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                    {errors.name && <TextInput.Error error={errors.name} />}
+                  </TextInput.Root>
+                </S.InputContainer>
+
+                <S.InputContainer>
+                  <S.InputLabel>Código do produto:</S.InputLabel>
+
+                  <TextInput.Root>
+                    <Controller
+                      name="code"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextInput.Input
+                          placeholder="Digite um código para o produto"
+                          placeholderTextColor={theme.colors.gray_400}
+                          autoCorrect={false}
+                          autoComplete="off"
+                          autoCapitalize="none"
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                  </TextInput.Root>
+                </S.InputContainer>
+
+                <S.InputContainer>
+                  <S.InputLabel>Valor do produto:</S.InputLabel>
+
+                  <TextInput.Root>
+                    <Controller
+                      name="price"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <TextInput.Input
+                          keyboardType="numeric"
+                          placeholder="Digite um valor para o produto"
+                          placeholderTextColor={theme.colors.gray_400}
+                          autoCorrect={false}
+                          autoComplete="off"
+                          autoCapitalize="none"
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+
+                    {errors.price && <TextInput.Error error={errors.price} />}
+                  </TextInput.Root>
+                </S.InputContainer>
+
+                <S.InputContainer>
+                  <S.InputLabel>Descrição do produto:</S.InputLabel>
+
+                  <S.ProductDescriptionInputContainer>
+                    <Controller
+                      name="description"
+                      control={control}
+                      render={({ field: { onChange, value } }) => (
+                        <S.ProductDescriptionInput
+                          placeholder="Digite uma descrição para o produto"
+                          placeholderTextColor={theme.colors.gray_400}
+                          autoCorrect={false}
+                          autoComplete="off"
+                          autoCapitalize="none"
+                          multiline
+                          maxLength={240}
+                          onChangeText={onChange}
+                          value={value}
+                        />
+                      )}
+                    />
+                  </S.ProductDescriptionInputContainer>
+                </S.InputContainer>
+
+                <Button.Root
+                  type="outline"
+                  color={theme.colors.categories}
+                  onPress={handleRedirectToSelectCategory}
+                >
+                  <Button.Text color={theme.colors.categories}>
+                    Escolha uma categoria para o produto
+                  </Button.Text>
+
+                  <Button.Icon>
+                    <S.CategoryIcon name="chevron-right" />
+                  </Button.Icon>
+                </Button.Root>
+              </S.FormContent>
+
+              <S.FooterContainer>
+                {pageStatus === 'error' && (
+                  <S.ErrorLabel>
+                    Ocorreu um erro ao cadastrar, tente novamente mais tarde
+                  </S.ErrorLabel>
                 )}
-              </Button.Root>
-            </S.FooterContainer>
-          </S.Content>
-        </S.Container>
-      </TouchableWithoutFeedback>
+
+                <Button.Root
+                  type="filled"
+                  color={theme.colors.products}
+                  onPress={handleSubmit(handleRegisterProduct)}
+                  disabled={pageStatus === 'loading'}
+                >
+                  {pageStatus === 'loading' ? (
+                    <ActivityIndicator />
+                  ) : (
+                    <Button.Text color={theme.colors.light}>
+                      Cadastrar produto
+                    </Button.Text>
+                  )}
+                </Button.Root>
+              </S.FooterContainer>
+            </S.Content>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </S.Container>
     </>
   );
 };
