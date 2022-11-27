@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { useAppSelector } from '../../hooks/appSelector';
 import { IProductBag } from '../../features/bag/types';
@@ -34,6 +35,7 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
 
   const products = useAppSelector(state => state.bag.products);
+  const isScreenFocused = useIsFocused();
 
   const theme = useTheme();
 
@@ -82,9 +84,15 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
     navigation.goBack();
   };
 
+  const handleRedirectToRegisterProduct = useCallback(() => {
+    navigation.navigate('RegisterProduct', { redirect: 'SelectProducts' });
+  }, [navigation]);
+
   useEffect(() => {
-    getCategories();
-  }, [getCategories]);
+    if (isScreenFocused) {
+      getCategories();
+    }
+  }, [getCategories, isScreenFocused]);
 
   useEffect(() => {
     if (search === '') {
@@ -160,6 +168,22 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
     [],
   );
 
+  const renderEmptyProducts = useCallback(() => {
+    return (
+      <Button.Root
+        type="outline"
+        color={theme.colors.products}
+        onPress={handleRedirectToRegisterProduct}
+      >
+        <Button.Icon>
+          <S.RegisterProductIcon name="plus" />
+        </Button.Icon>
+
+        <Button.Text color={theme.colors.products}>Novo produto</Button.Text>
+      </Button.Root>
+    );
+  }, [handleRedirectToRegisterProduct, theme.colors.products]);
+
   return (
     <S.Container>
       <DraggableButton onPress={handleToggleAddedProductsModal}>
@@ -198,11 +222,14 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
 
       <S.ProductsContainer>
         <S.Products
-          data={!search ? activeCategory.products : filteredProducts}
+          data={!search ? activeCategory?.products : filteredProducts}
           renderItem={renderProduct}
           keyExtractor={product => String(product.id)}
           numColumns={2}
           key={2}
+          ListEmptyComponent={
+            !search && pageStatus !== 'loading' ? renderEmptyProducts : null
+          }
         />
       </S.ProductsContainer>
 

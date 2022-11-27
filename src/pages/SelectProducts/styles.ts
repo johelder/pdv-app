@@ -127,3 +127,8 @@ export const Loading = styled.ActivityIndicator.attrs(({ theme }) => ({
 export const BackToSaleButtonContainer = styled.View`
   margin: 0 15px;
 `;
+
+export const RegisterProductIcon = styled(Feather)`
+  font-size: 24px;
+  color: ${({ theme }) => theme.colors.products};
+`;

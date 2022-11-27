@@ -4,7 +4,9 @@ export type TRootStackParamList = {
   Home: undefined;
   NewSale: undefined;
   SelectProducts: undefined;
-  RegisterProduct: undefined;
+  RegisterProduct: {
+    redirect: 'SelectProducts' | 'RegisteredCategories';
+  };
   SelectCategories: undefined;
   RegisterCategory: {
     redirect: 'RegisterCategory' | 'RegisteredCategories';
