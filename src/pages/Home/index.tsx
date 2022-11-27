@@ -70,6 +70,14 @@ export const Home = ({ navigation }: THomeProps) => {
     [sales.length],
   );
 
+  const renderEmptySales = useCallback(() => {
+    return (
+      <S.EmptySalesLabel>
+        Você ainda não realizou vendas hoje :(
+      </S.EmptySalesLabel>
+    );
+  }, []);
+
   return (
     <>
       <StatusBar
@@ -119,6 +127,7 @@ export const Home = ({ navigation }: THomeProps) => {
             keyExtractor={sale => String(sale.id)}
             onRefresh={getSales}
             refreshing={pageStatus === 'loading'}
+            ListEmptyComponent={renderEmptySales}
           />
         </S.SalesContainer>
       </S.Container>

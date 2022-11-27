@@ -92,3 +92,8 @@ export const Sales = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
 })``;
+
+export const EmptySalesLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.regular};
+  font-size: 16px;
+`;
