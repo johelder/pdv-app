@@ -157,7 +157,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
         translucent
       />
       <S.Container>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            height: '100%',
+          }}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <S.Content>
               <S.FormContent>
@@ -296,12 +301,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
 
                   <Button.Root
                     type={
-                      selectedPaymentMethod.id === 2 ? 'outline' : 'unfilled'
+                      selectedPaymentMethod.id === 3 ? 'outline' : 'unfilled'
                     }
                     color={theme.colors.primary}
                     align="start"
                     onPress={() =>
-                      handleChoosePaymentMethod({ id: 2, name: 'Cartão' })
+                      handleChoosePaymentMethod({ id: 3, name: 'Cartão' })
                     }
                   >
                     <S.PaymentMethodIconContainer>
@@ -315,12 +320,12 @@ export const NewSale = ({ navigation }: TNewSaleProps) => {
 
                   <Button.Root
                     type={
-                      selectedPaymentMethod.id === 3 ? 'outline' : 'unfilled'
+                      selectedPaymentMethod.id === 2 ? 'outline' : 'unfilled'
                     }
                     color={theme.colors.primary}
                     align="start"
                     onPress={() =>
-                      handleChoosePaymentMethod({ id: 3, name: 'Pix' })
+                      handleChoosePaymentMethod({ id: 2, name: 'Pix' })
                     }
                   >
                     <S.PaymentMethodIconContainer>

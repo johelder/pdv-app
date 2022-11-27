@@ -34,7 +34,10 @@ const choosePhotoMethodOptions: CameraOptions = {
   mediaType: 'photo',
 };
 
-export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
+export const RegisterProduct = ({
+  navigation,
+  route,
+}: TRegisterProductProps) => {
   const {
     control,
     handleSubmit,
@@ -131,6 +134,16 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
 
     setPageStatus('success');
     clearCategories();
+    handleRedirect();
+  };
+
+  const handleRedirect = () => {
+    if (route.params.redirect === 'SelectProducts') {
+      navigation.goBack();
+
+      return;
+    }
+
     navigation.navigate('RegisteredCategories');
   };
 
@@ -147,7 +160,10 @@ export const RegisterProduct = ({ navigation }: TRegisterProductProps) => {
       />
 
       <S.Container>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ height: '100%' }}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <S.Content>
               <S.FormContent>
