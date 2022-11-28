@@ -180,3 +180,15 @@ export const ProductsTotal = styled.Text`
 
   color: ${({ theme }) => theme.colors.success};
 `;
+
+export const FooterContainer = styled.View``;
+
+export const ErrorLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
+  font-size: 14px;
+
+  text-align: center;
+  margin-bottom: 10px;
+
+  color: ${({ theme }) => theme.colors.attention};
+`;

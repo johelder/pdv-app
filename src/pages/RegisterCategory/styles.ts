@@ -5,11 +5,13 @@ export const Container = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Content = styled.View`
-  height: 100%;
+export const Content = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    height: '100%',
+    justifyContent: 'space-between',
+  },
+})`
   padding: 20px 15px 0;
-
-  justify-content: space-between;
 `;
 
 export const FormContent = styled.View``;
@@ -57,4 +59,16 @@ export const CategoryDescriptionInput = styled.TextInput`
   border-radius: 5px;
 
   padding: 15px;
+`;
+
+export const FooterContainer = styled.View``;
+
+export const ErrorLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
+  font-size: 14px;
+
+  text-align: center;
+  margin-bottom: 10px;
+
+  color: ${({ theme }) => theme.colors.attention};
 `;

@@ -8,7 +8,11 @@ import { IProductSold } from '../../pages/Home/types';
 
 import * as S from './styles';
 
-export const SaleButton = ({ sale, ...rest }: ISaleButtonProps) => {
+export const SaleButton = ({
+  sale,
+  dailyPosition,
+  ...rest
+}: ISaleButtonProps) => {
   const [toggleSaleModal, setToggleModalSale] = useState(false);
 
   const saleHour = formatHours(sale.createdAt);
@@ -58,7 +62,7 @@ export const SaleButton = ({ sale, ...rest }: ISaleButtonProps) => {
           <S.SaleModalContent>
             <S.ModalHeader>
               <S.ModalTitle>
-                Essa foi a {sale.daily_position}° venda do dia! 🎉
+                Essa foi a {dailyPosition}° venda do dia! 🎉
               </S.ModalTitle>
               <S.CloseSaleModalButton onPress={handleToggleSaleModal}>
                 <S.CloseIcon name="x" />

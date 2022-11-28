@@ -30,14 +30,23 @@ export const DescriptionContainer = styled.View`
 
   margin-top: -5px;
   border-radius: 8px;
+
+  justify-content: space-between;
 `;
 
-export const Name = styled.Text`
+export const ProductDescription = styled.View`
+  align-items: center;
+`;
+
+export const Name = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-family: ${({ theme }) => theme.fonts.primary.semiBold};
   font-size: 18px;
   color: ${({ theme }) => theme.colors.dark};
 
   margin: 10px 0 4px;
+  padding: 0 10px;
 `;
 
 export const Price = styled.Text`
@@ -66,6 +75,7 @@ export const MultiButtonContainer = styled.View`
   justify-content: space-between;
 
   padding: 0 15px;
+  margin-bottom: 10px;
 `;
 
 export const RemoveProductButton = styled.TouchableOpacity``;

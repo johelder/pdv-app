@@ -1,5 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HeaderBackButton } from '@react-navigation/elements';
+
 import { TRootStackParamList } from './types';
 
 import {
@@ -77,9 +79,15 @@ export const AppStackRoutes = () => {
         <Stack.Screen
           name="RegisteredCategories"
           component={RegisteredCategories}
-          options={{
+          options={({ navigation }) => ({
             title: 'Categorias cadastradas',
-          }}
+            headerLeft: () => (
+              <HeaderBackButton
+                onPress={() => navigation.navigate('Home')}
+                tintColor={theme.colors.primary}
+              />
+            ),
+          })}
         />
         <Stack.Screen
           name="RegisteredProducts"

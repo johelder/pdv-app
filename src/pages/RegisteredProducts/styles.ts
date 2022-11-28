@@ -1,5 +1,6 @@
-import { FlatList, FlatListProps } from 'react-native';
 import styled from 'styled-components/native';
+import { FlatList, FlatListProps } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 import { IProduct } from '../../components/Product/types';
 
 export const Container = styled.SafeAreaView`
@@ -30,4 +31,19 @@ export const ProductContainer = styled.View`
   height: 260px;
 
   margin-bottom: 10px;
+`;
+
+export const ErrorLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.semiBold};
+  font-size: 14px;
+  text-align: center;
+
+  color: ${({ theme }) => theme.colors.attention};
+  padding: 0 20px;
+`;
+
+export const NewProductIcon = styled(Feather)`
+  font-size: 24px;
+
+  color: ${({ theme }) => theme.colors.products};
 `;

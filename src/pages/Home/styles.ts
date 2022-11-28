@@ -66,7 +66,7 @@ export const NavigationButtonsContainer = styled.ScrollView.attrs({
   },
 })`
   position: absolute;
-  bottom: -58px;
+  top: 33%;
 `;
 
 export const DailySalesContainer = styled.View`
@@ -92,3 +92,8 @@ export const Sales = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
 })``;
+
+export const EmptySalesLabel = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.primary.regular};
+  font-size: 16px;
+`;
