@@ -29,6 +29,7 @@ export const RegisterCategory = ({
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({ defaultValues, resolver: yupResolver(categorySchema) });
 
   const theme = useTheme();
@@ -52,8 +53,9 @@ export const RegisterCategory = ({
       return;
     }
 
-    handleRedirect();
     setPageStatus('success');
+    reset();
+    handleRedirect();
   };
 
   return (
