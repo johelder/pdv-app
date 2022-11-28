@@ -113,13 +113,13 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
       return (
         <S.CategoryContainer>
           <Button.Root
-            type={activeCategory.id === category.id ? 'filled' : 'outline'}
+            type={activeCategory?.id === category.id ? 'filled' : 'outline'}
             color={theme.colors.categories}
             onPress={() => handleActiveCategory(category)}
           >
             <Button.Text
               color={
-                activeCategory.id === category.id
+                activeCategory?.id === category.id
                   ? theme.colors.light
                   : theme.colors.dark
               }
@@ -216,6 +216,7 @@ export const SelectProducts = ({ navigation }: TSelectProductsProps) => {
             data={categories}
             renderItem={renderCategory}
             keyExtractor={category => String(category.id)}
+            horizontal
           />
         </S.CategoriesContainer>
       )}
