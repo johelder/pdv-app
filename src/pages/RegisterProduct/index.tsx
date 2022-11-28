@@ -42,6 +42,7 @@ export const RegisterProduct = ({
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     defaultValues,
     resolver: yupResolver(productSchema),
@@ -134,6 +135,7 @@ export const RegisterProduct = ({
 
     setPageStatus('success');
     clearCategories();
+    reset();
     handleRedirect();
   };
 
