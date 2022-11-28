@@ -30,3 +30,9 @@ export const ErrorLabel = styled.Text`
   color: ${({ theme }) => theme.colors.attention};
   padding: 0 20px;
 `;
+
+export const NewCategoryIcon = styled(Feather)`
+  font-size: 24px;
+
+  color: ${({ theme }) => theme.colors.categories};
+`;

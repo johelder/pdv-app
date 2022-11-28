@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ListRenderItemInfo, StatusBar, ActivityIndicator } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 import { Button } from '../../components';
 import { category } from '../../services/category';
@@ -17,6 +18,9 @@ export const RegisteredCategories = ({
 }: TRegisteredCategoriesProps) => {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
+
+  const isScreenFocused = useIsFocused();
+
   const theme = useTheme();
 
   const handleRedirectToRegisteredProducts = useCallback(
@@ -25,6 +29,12 @@ export const RegisteredCategories = ({
     },
     [navigation],
   );
+
+  const handleRedirectToRegisterCategory = useCallback(() => {
+    navigation.navigate('RegisterCategory', {
+      redirect: 'RegisteredCategories',
+    });
+  }, [navigation]);
 
   const getCategories = useCallback(async () => {
     setPageStatus('loading');
@@ -42,8 +52,10 @@ export const RegisteredCategories = ({
   }, []);
 
   useEffect(() => {
-    getCategories();
-  }, [getCategories]);
+    if (isScreenFocused) {
+      getCategories();
+    }
+  }, [getCategories, isScreenFocused]);
 
   const renderCategory = useCallback(
     ({ item: category }: ListRenderItemInfo<ICategory>) => {
@@ -64,6 +76,24 @@ export const RegisteredCategories = ({
     },
     [handleRedirectToRegisteredProducts, theme.colors.dark],
   );
+
+  const renderEmptyCategories = useCallback(() => {
+    return (
+      <Button.Root
+        type="outline"
+        color={theme.colors.categories}
+        onPress={handleRedirectToRegisterCategory}
+      >
+        <Button.Icon>
+          <S.NewCategoryIcon name="plus" />
+        </Button.Icon>
+
+        <Button.Text color={theme.colors.categories}>
+          Nova categoria
+        </Button.Text>
+      </Button.Root>
+    );
+  }, [handleRedirectToRegisterCategory, theme.colors.categories]);
 
   if (pageStatus === 'loading') {
     return (
@@ -101,6 +131,7 @@ export const RegisteredCategories = ({
             data={categories}
             keyExtractor={category => String(category.id)}
             renderItem={renderCategory}
+            ListEmptyComponent={renderEmptyCategories}
           />
         </S.Content>
       </S.Container>
