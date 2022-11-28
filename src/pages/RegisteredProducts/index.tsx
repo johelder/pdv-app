@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, ListRenderItemInfo } from 'react-native';
 
 import { category } from '../../services/category';
-import { Product } from '../../components';
+import { Button, Product } from '../../components';
 import { IProduct } from '../../components/Product/types';
 
 import { TRegisteredProductsProps } from './types';
@@ -12,7 +12,10 @@ import { useTheme } from 'styled-components';
 
 import * as S from './styles';
 
-export const RegisteredProducts = ({ route }: TRegisteredProductsProps) => {
+export const RegisteredProducts = ({
+  navigation,
+  route,
+}: TRegisteredProductsProps) => {
   const [products, setProducts] = useState<IProduct[] | undefined>([]);
   const [pageStatus, setPageStatus] = useState<TPageStatus>('idle');
 
@@ -34,6 +37,12 @@ export const RegisteredProducts = ({ route }: TRegisteredProductsProps) => {
     setPageStatus('success');
   }, [categoryId]);
 
+  const handleRedirectToRegisterProduct = useCallback(() => {
+    navigation.navigate('RegisterProduct', {
+      redirect: 'RegisteredCategories',
+    });
+  }, [navigation]);
+
   useEffect(() => {
     getProducts();
   }, [getProducts]);
@@ -48,6 +57,22 @@ export const RegisteredProducts = ({ route }: TRegisteredProductsProps) => {
     },
     [],
   );
+
+  const renderEmptyProducts = useCallback(() => {
+    return (
+      <Button.Root
+        type="outline"
+        color={theme.colors.products}
+        onPress={handleRedirectToRegisterProduct}
+      >
+        <Button.Icon>
+          <S.NewProductIcon name="plus" />
+        </Button.Icon>
+
+        <Button.Text color={theme.colors.products}>Novo produto</Button.Text>
+      </Button.Root>
+    );
+  }, [handleRedirectToRegisterProduct, theme.colors.products]);
 
   if (pageStatus === 'loading') {
     return (
@@ -81,6 +106,7 @@ export const RegisteredProducts = ({ route }: TRegisteredProductsProps) => {
             keyExtractor={product => String(product.id)}
             numColumns={2}
             key={2}
+            ListEmptyComponent={renderEmptyProducts}
           />
         </S.ProductsContainer>
       </S.Content>
