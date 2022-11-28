@@ -29,7 +29,9 @@ export const Home = ({ navigation }: THomeProps) => {
   };
 
   const handleRedirectToRegisterProduct = () => {
-    navigation.navigate('RegisterProduct');
+    navigation.navigate('RegisterProduct', {
+      redirect: 'RegisteredCategories',
+    });
   };
 
   const handleRedirectToRegisterCategory = () => {
